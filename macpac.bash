@@ -10,7 +10,9 @@ BASENAME=$(
     sed 's/-.*//g'
 )
 
+case ${REPO_PATH} in "")
 REPO_PATH="" # point to a directory containing .pkgz files
+;; esac
 
 PKG_PATH=$(find ${REPO_PATH} -name '*.pkgz' | tail -1)
 
