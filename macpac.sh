@@ -54,7 +54,7 @@ install() {
 case "${1}" in
   i|install)   ACTIVE=install   ;; 
   u|uninstall) ACTIVE=uninstall ;;
-  *)           xelp             ;;
+  h|help|*)           xelp             ;;
 esac
 
 case "${3}" in
