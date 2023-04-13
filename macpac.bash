@@ -1,6 +1,17 @@
 #!/usr/bin/env bash -e
 
-case ${2} in "") exit 1 ;; esac
+xelp() {
+  cat << EOF
+macpac is a tiny package helper for macOS.
+
+$ macpac install   [pkg]
+$ macpac uninstall [pkg]
+$ macpac help
+EOF
+exit 1
+}
+
+case "" in $1|$2) xelp ;; esac
 
 BASENAME=$(
   echo ${2} | \
@@ -14,29 +25,32 @@ case ${REPO_PATH} in "")
 REPO_PATH="" # point to a directory containing .pkgz files
 ;; esac
 
-PKG_PATH=$(find ${REPO_PATH} -name '*.pkgz' | tail -1)
+PKG_PATH=$(
+  find ${REPO_PATH} \
+    -name '*.pkgz' \
+    -and -name "*$BASENAME*" \
+    | tail -1
+)
 
-# non functional
 uninstall() {
-  PROTECTED="local:locale:bin:include:lib:doc:opt:share:man"
   for i in `tar -tf ${PKG_PATH}`; do
-    for j in `echo ${PROTECTED} | tr ':' '\n'`; do
-      case "${i}" in *${j}/) echo $i ;; *) ;; esac
-    done
+    case ${i} in
+      *local/|*locale/|*bin/|*include/|*lib/|*info/|*doc/|*opt/|*share/|*man/) ;;
+      *) rm -rfv /${i} ;;
+    esac
   done
 }
 
 install() {
   printf "installing ${BASENAME}... "
-
   tar -xpf ${PKG_PATH} \
     --strip-components=1 \
     -C /opt
-
   echo "done."
 }
 
 case "${1}" in
-  i) install   "${@}" ;; 
-  u) uninstall "${@}" ;;
-esac || "${@}"
+  i|install)   install   "${@}" ;; 
+  u|uninstall) uninstall "${@}" ;;
+  *)           xelp             ;;
+esac
