@@ -1,5 +1,9 @@
 #!/usr/bin/env bash -e
 
+case ${REPO_PATH} in "")
+REPO_PATH="" # point to a directory containing .pkgz files
+;; esac
+
 xelp() {
   cat << EOF
 macpac is a tiny package helper for macOS.
@@ -13,44 +17,47 @@ exit 1
 
 case "" in $1|$2) xelp ;; esac
 
-BASENAME=$(
-  echo ${2} | \
+BASENAME() {
+  echo ${PKG_NAME} | \
     tr '/' '\n' | \
     tail -1 | \
     sed 's/.macpacz//g' | \
     sed 's/-.*//g'
-)
+}
 
-case ${REPO_PATH} in "")
-REPO_PATH="" # point to a directory containing .pkgz files
-;; esac
-
-PKG_PATH=$(
+PKG_PATH() {
   find ${REPO_PATH} \
     -name '*.pkgz' \
-    -and -name "*$BASENAME*" \
+    -and -name "*`BASENAME`*" \
     | tail -1
-)
+}
 
 uninstall() {
-  for i in `tar -tf ${PKG_PATH}`; do
+  printf "uninstalling `BASENAME`... "
+  for i in `tar -tf $(PKG_PATH)`; do
     case ${i} in
       *local/|*locale/|*bin/|*include/|*lib/|*info/|*doc/|*opt/|*share/|*man/) ;;
-      *) rm -rfv /${i} ;;
+      *) rm -rf /${i} ;;
     esac
   done
+  echo "done."
 }
 
 install() {
-  printf "installing ${BASENAME}... "
-  tar -xpf ${PKG_PATH} \
+  printf "installing `BASENAME`... "
+  tar -xpf `PKG_PATH` \
     --strip-components=1 \
     -C /opt
   echo "done."
 }
 
 case "${1}" in
-  i|install)   install   "${@}" ;; 
-  u|uninstall) uninstall "${@}" ;;
+  i|install)   ACTIVE=install   ;; 
+  u|uninstall) ACTIVE=uninstall ;;
   *)           xelp             ;;
+esac
+
+case "${3}" in
+  "") PKG_NAME="$2"; $ACTIVE ${PKG} ;;
+  *) shift; for PKG in ${@}; do PKG_NAME=${PKG}; ${ACTIVE} ${PKG}; done ;;
 esac
