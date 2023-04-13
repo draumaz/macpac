@@ -19,17 +19,13 @@ case "" in $1|$2) xelp ;; esac
 
 BASENAME() {
   echo ${PKG_NAME} | \
-    tr '/' '\n' | \
-    tail -1 | \
-    sed 's/.macpacz//g' | \
-    sed 's/-.*//g'
+    tr '/' '\n' | sed 's/-.*//g' | tail -1
 }
 
 PKG_PATH() {
   find ${REPO_PATH} \
     -name '*.pkgz' \
-    -and -name "*`BASENAME`*" \
-    | tail -1
+    -and -name "*`BASENAME`*" | tail -1
 }
 
 uninstall() {
