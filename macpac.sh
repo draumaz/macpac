@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -e
+#!/bin/sh -e
 
 case ${REPO_PATH} in "")
 REPO_PATH="" # point to a directory containing .pkgz files
