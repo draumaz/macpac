@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+# macpac | draumaz (2023)
+
 case ${REPO_PATH} in "")
 REPO_PATH="" # point to a directory containing .pkgz files
 ;; esac
@@ -17,11 +19,13 @@ exit 1
 
 case "" in $1|$2) xelp ;; esac
 
+# return basic name for display
 BASENAME() {
   echo ${PKG_NAME} | \
     tr '/' '\n' | sed 's/-.*//g' | tail -1
 }
 
+# return direct path to BASENAME's .pkgz
 PKG_PATH() {
   find ${REPO_PATH} \
     -name '*.pkgz' \
@@ -32,6 +36,7 @@ uninstall() {
   printf "uninstalling `BASENAME`... "
   for i in `tar -tf $(PKG_PATH)`; do
     case ${i} in
+      # blacklisted prefixes (not skipping them causes bad things)
       *local/|*locale/|*bin/|*include/|*lib/|*info/|*doc/|*opt/|*share/|*man/) ;;
       *) rm -rf /${i} ;;
     esac
