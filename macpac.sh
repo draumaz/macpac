@@ -34,7 +34,7 @@ PKG_PATH() {
 
 uninstall() {
   printf "uninstalling `BASENAME`... "
-  for i in `tar -tf $(PKG_PATH)`; do
+  for i in `bsdtar -tf $(PKG_PATH)`; do
     case ${i} in
       # blacklisted prefixes (not skipping them causes bad things)
       *local/|*locale/|*bin/|*include/|*lib/|*info/|*doc/|*opt/|*share/|*man/) ;;
@@ -46,7 +46,7 @@ uninstall() {
 
 install() {
   printf "installing `BASENAME`... "
-  tar -xpf `PKG_PATH` \
+  bsdtar -xpf `PKG_PATH` \
     --strip-components=1 \
     -C /opt
   echo "done."
