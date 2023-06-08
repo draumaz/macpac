@@ -12,7 +12,7 @@ MACPAC_INSTALL_PATH="" # make sure you have r+w access!
 ;; esac
 ## end   config ##
 
-case ${VERBOSE} in yes|1) VERB="-v" ;; esac
+case ${MACPAC_VERBOSITY} in yes|1) VERB="-v" ;; esac
 
 xist() {
   find ${MACPAC_PKGS_PATH} -name "*.pkgz" | \
