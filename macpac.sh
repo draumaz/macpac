@@ -29,6 +29,7 @@ $ macpac install   [pkg]
 $ macpac uninstall [pkg]
 $ macpac help
 $ macpac list
+$ macpac wrap
 EOF
 exit 1
 }
@@ -47,7 +48,7 @@ PKG_PATH() {
 }
 
 wrap() {
-  printf "wrapping ${2}... "
+  printf "wrapping ${2}.pkgz... "
   tar -cz ${VERB} -f ${MACPAC_PKGS_PATH}/${1}.pkgz *
   printf "done."
   exit 0
