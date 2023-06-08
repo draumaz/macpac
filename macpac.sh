@@ -8,6 +8,12 @@ case ${REPO_PATH} in "")
 REPO_PATH="" # point to a directory containing .pkgz files
 ;; esac
 
+xist() {
+  find ${REPO_PATH} -name "*.pkgz" | \
+    tr '/' '\n' | \
+    grep ".pkgz" | sed 's/.pkgz//g'
+}
+
 xelp() {
   cat << EOF
 macpac is a tiny package helper for macOS.
@@ -15,11 +21,10 @@ macpac is a tiny package helper for macOS.
 $ macpac install   [pkg]
 $ macpac uninstall [pkg]
 $ macpac help
+$ macpac list
 EOF
 exit 1
 }
-
-case "" in $1|$2) xelp ;; esac
 
 # return basic name for display
 BASENAME() {
@@ -57,7 +62,7 @@ install() {
 case "${1}" in
   i|install)   ACTIVE=install   ;; 
   u|uninstall) ACTIVE=uninstall ;;
-  h|help|*)           xelp             ;;
+  l|list) xist ;; h|help|*) xelp ;;
 esac
 
 case "${3}" in
