@@ -28,8 +28,8 @@ $ tar -cvzf ~/packages/package-2.1.0.pkgz *
 
 - macOS gets cagey with libraries, so here are some variables it might be helpful to set.
 
-```LDFLAGS="-L${MACPAC_PKGS_PATH}/lib```
-
-```CPPFLAGS="-I${MACPAC_PKGS_PATH}/include```
-
-```DYLD_FALLBACK_LIBRARY_PATH="${MACPAC_PKGS_PATH}/lib"```
+```
+LDFLAGS="-L${MACPAC_PKGS_PATH}/lib
+CPPFLAGS="-I${MACPAC_PKGS_PATH}/include
+DYLD_FALLBACK_LIBRARY_PATH="${MACPAC_PKGS_PATH}/lib"
+```
