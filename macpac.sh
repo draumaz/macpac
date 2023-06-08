@@ -12,8 +12,10 @@ MACPAC_INSTALL_PATH="" # make sure you have r+w access!
 ;; esac
 ## end   config ##
 
+case ${VERBOSE} in yes|1) VERB="-v" ;; esac
+
 xist() {
-  find ${REPO_PATH} -name "*.pkgz" | \
+  find ${MACPAC_PKGS_PATH} -name "*.pkgz" | \
     tr '/' '\n' | \
     grep ".pkgz" | sed 's/.pkgz//g'
 }
@@ -49,7 +51,7 @@ uninstall() {
     case ${i} in
       # blacklisted prefixes (not skipping them causes bad things)
       *local/|*locale/|*bin/|*include/|*lib/|*info/|*doc/|*opt/|*share/|*man/) ;;
-      *) rm -rf /${i} ;;
+      *) rm -rf ${VERB} /${i} ;;
     esac
   done
   echo "done."
@@ -57,7 +59,7 @@ uninstall() {
 
 install() {
   printf "installing `BASENAME`... "
-  bsdtar -xpf `PKG_PATH` \
+  bsdtar -xp ${VERB} -f `PKG_PATH` \
     --strip-components=2 \
     -C ${MACPAC_INSTALL_PATH}
   echo "done."
