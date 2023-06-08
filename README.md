@@ -1,5 +1,6 @@
 # macpac
-A barebones macOS package manager where you gotta make the packages yourself
+- A barebones macOS package manager where you gotta make the packages yourself.
+- Think of it like Linux From Scratch but infinitely less educational c:
 
 # environment variables
 ```
@@ -18,13 +19,29 @@ uninstalling tmux... done.
 [~] %
 ```
 
+# usage tips
+- .pkgz files, the heart of macpac, are literally just tarballs with a binary file tree in them.
+```
+[~/packages] % tar -tf tree-2.1.1.pkgz
+opt/
+opt/local/
+opt/local/bin/
+opt/local/share/
+opt/local/share/man/
+opt/local/share/man/man1/
+opt/local/share/man/man1/tree.1
+opt/local/bin/tree
+[~/packages] %
+```
+- if you've ever packaged for Slackware or CRUX, you'll be right at home.
+
 # compiling tips
 
 - fakeroot into $PWD/dest while compiling, then tarball into a .pkgz file.
 ```
-$ make install DESTDIR=$PWD/dest > /dev/null 2>&1
+$ make install DESTDIR=$PWD/dest
 $ cd dest
-$ tar -cvzf ~/packages/package-2.1.0.pkgz *
+$ macpac wrap ${PACKAGE_NAME}
 ```
 
 - macOS gets cagey with libraries, so here are some variables it might be helpful to set.
