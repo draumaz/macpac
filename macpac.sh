@@ -2,6 +2,8 @@
 
 # macpac | draumaz (2023)
 
+PKG_PREFIX="/opt/local" # customizable! just make sure you have r+w
+
 case ${REPO_PATH} in "")
 REPO_PATH="" # point to a directory containing .pkgz files
 ;; esac
@@ -47,8 +49,8 @@ uninstall() {
 install() {
   printf "installing `BASENAME`... "
   bsdtar -xpf `PKG_PATH` \
-    --strip-components=1 \
-    -C /opt
+    --strip-components=2 \
+    -C ${PKG_PREFIX}
   echo "done."
 }
 
