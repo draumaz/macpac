@@ -18,6 +18,7 @@ xist() {
   find ${MACPAC_PKGS_PATH} -name "*.pkgz" | \
     tr '/' '\n' | \
     grep ".pkgz" | sed 's/.pkgz//g'
+  exit 0
 }
 
 xelp() {
@@ -45,6 +46,13 @@ PKG_PATH() {
     -and -name "*`BASENAME`*" | tail -1
 }
 
+wrap() {
+  printf "wrapping ${2}... "
+  tar -cz ${VERB} -f ${MACPAC_PKGS_PATH}/${1}.pkgz *
+  printf "done."
+  exit 0
+}
+
 uninstall() {
   printf "uninstalling `BASENAME`... "
   for i in `bsdtar -tf $(PKG_PATH)`; do
@@ -68,7 +76,7 @@ install() {
 case "${1}" in
   i|install)   ACTIVE=install   ;; 
   u|uninstall) ACTIVE=uninstall ;;
-  l|list) xist ;; h|help|*) xelp ;;
+  l|list) xist ;; w|wrap) wrap ${@} ;; h|help|*) xelp ;;
 esac
 
 case "${3}" in
