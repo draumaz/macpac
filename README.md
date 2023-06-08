@@ -7,6 +7,15 @@ $REPO_PATH ~ a folder containing .pkgz files, a tarball with a packages file tre
 $PKG_PREFIX ~ the path that you want macpac to install things
 ```
 
+# usage
+```
+[~] % macpac install tmux
+installing tmux... done.
+[~] % macpac uninstall tmux
+uninstalling tmux... done.
+[~] %
+```
+
 # compiling tips
 
 - fakeroot into $PWD/dest while compiling, then tarball into a .pkgz file.
