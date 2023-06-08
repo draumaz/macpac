@@ -4,7 +4,7 @@ A barebones macOS package manager where you gotta make the packages yourself
 # environment variables
 ```
 $REPO_PATH ~ a folder containing .pkgz files, a tarball with a packages file tree
-$DEST_PATH ~ the path that you want macpac to install things
+$PKG_PREFIX ~ the path that you want macpac to install things
 ```
 
 # compiling tips
@@ -18,8 +18,8 @@ $ tar -cvzf ~/packages/package-2.1.0.pkgz *
 
 - macOS gets cagey with libraries, so here are some variables it might be helpful to set.
 
-```LDFLAGS="-L${DEST_PATH}/lib```
+```LDFLAGS="-L${PKG_PREFIX}/lib```
 
-```CPPFLAGS="-I${DEST_PATH}/include```
+```CPPFLAGS="-I${PKG_PREFIX}/include```
 
-```DYLD_FALLBACK_LIBRARY_PATH="${DEST_PATH}/lib"```
+```DYLD_FALLBACK_LIBRARY_PATH="${PKG_PREFIX}/lib"```
