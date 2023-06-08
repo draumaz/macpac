@@ -2,11 +2,15 @@
 
 # macpac | draumaz (2023)
 
-PKG_PREFIX="/opt/local" # customizable! just make sure you have r+w
-
-case ${REPO_PATH} in "")
-REPO_PATH="" # point to a directory containing .pkgz files
+## begin config ##
+case ${MACPAC_PKGS_PATH} in "")
+MACPAC_PKGS_PATH="" # point to a directory containing .pkgz files.
 ;; esac
+
+case ${MACPAC_INSTALL_PATH} in "")
+MACPAC_INSTALL_PATH="" # make sure you have r+w access!
+;; esac
+## end   config ##
 
 xist() {
   find ${REPO_PATH} -name "*.pkgz" | \
@@ -34,7 +38,7 @@ BASENAME() {
 
 # return direct path to BASENAME's .pkgz
 PKG_PATH() {
-  find ${REPO_PATH} \
+  find ${MACPAC_PKGS_PATH} \
     -name '*.pkgz' \
     -and -name "*`BASENAME`*" | tail -1
 }
@@ -55,7 +59,7 @@ install() {
   printf "installing `BASENAME`... "
   bsdtar -xpf `PKG_PATH` \
     --strip-components=2 \
-    -C ${PKG_PREFIX}
+    -C ${MACPAC_INSTALL_PATH}
   echo "done."
 }
 
