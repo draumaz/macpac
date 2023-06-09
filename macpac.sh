@@ -72,7 +72,8 @@ netinstall() {
   NETPKG=$(curl -sL https://macpac.draumaz.xyz/m2/index.html | \
     tr '>' '\n' | tr '"' '\n' | grep https | grep `BASENAME`)
   printf "found! (${NETPKG})\ninstalling ${PKG_NAME}... "
-  bsdtar -xp ${VERB} -f `PKG_PATH` \
+  curl -fsLO ${NETPKG}
+  bsdtar -xp ${VERB} -f $(find . -maxdepth 1 -name "*.pkgz") \
     --strip-components=2 \
     -C ${MACPAC_INSTALL_PATH}
   find /tmp/ -maxdepth 1 -name "*.pkgz" -delete
