@@ -37,7 +37,7 @@ exit 1
 # return basic name for display
 BASENAME() {
   echo ${PKG_NAME} | \
-    tr '/' '\n' | sed 's/-.*//g' | tail -1
+    tr '/' '\n' | sed 's/@.*//g' | tail -1
 }
 
 # return direct path to BASENAME's .pkgz
@@ -83,7 +83,7 @@ netinstall() {
 }
 
 install() {
-  printf "installing `BASENAME`... "
+  printf "installing ${PKG_NAME}... "
   bsdtar -xp ${VERB} -f `PKG_PATH` \
     --strip-components=2 \
     -C ${MACPAC_INSTALL_PATH}
