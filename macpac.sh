@@ -52,7 +52,7 @@ PKG_PATH() {
 
 wrap() {
   printf "wrapping ${2}.pkgz... "
-  tar -cz ${VERB} -f ${MACPAC_PKGS_PATH}/${2}.pkgz *
+  bsdtar -cz ${VERB} -f ${MACPAC_PKGS_PATH}/${2}.pkgz *
   printf "done."
   exit 0
 }
