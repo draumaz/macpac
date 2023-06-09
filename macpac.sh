@@ -68,8 +68,7 @@ uninstall() {
 
 netlist() {
   curl -sL https://macpac.draumaz.xyz/m2/index.html | \
-    tr '>' '\n' | tr '"' '\n' | grep https | tr '/' '\n' | grep pkgz | \
-    sed 's/@/ (/g' | sed 's/.pkgz/)/g'
+    tr '>' '\n' | tr '"' '\n' | grep https | tr '/' '\n' | grep pkgz | sed 's/.pkgz//g'
 }
 
 netinstall() {
@@ -79,8 +78,8 @@ netinstall() {
   NETPKG=$(curl -sL https://macpac.draumaz.xyz/m2/index.html | \
     tr '>' '\n' | tr '"' '\n' | grep https | grep ${PKG_NAME}) || true
   case $NETPKG in "") printf "not found.\n"; exit 1 ;; esac
-  printf "found! (${NETPKG})\ninstalling ${PKG_NAME}... "
-  curl -fsLO ${NETPKG}
+  curl -fLO ${NETPKG}
+  printf "installing ${PKG_NAME}... "
   bsdtar -xp ${VERB} -f $(find . -maxdepth 1 -name "*.pkgz") \
     --strip-components=2 \
     -C ${MACPAC_INSTALL_PATH}
