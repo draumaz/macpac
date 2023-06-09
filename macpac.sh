@@ -67,10 +67,11 @@ uninstall() {
 }
 
 netinstall() {
+  find /tmp/ -maxdepth 1 -name "*.pkgz" -delete
   cd /tmp
   printf "locating ${PKG_NAME}... "
   NETPKG=$(curl -sL https://macpac.draumaz.xyz/m2/index.html | \
-    tr '>' '\n' | tr '"' '\n' | grep https | grep `BASENAME`)
+    tr '>' '\n' | tr '"' '\n' | grep https | grep ${PKG_NAME})
   printf "found! (${NETPKG})\ninstalling ${PKG_NAME}... "
   curl -fsLO ${NETPKG}
   bsdtar -xp ${VERB} -f $(find . -maxdepth 1 -name "*.pkgz") \
