@@ -67,13 +67,15 @@ uninstall() {
 }
 
 netinstall() {
-  printf "netinstalling `BASENAME`... "
   cd /tmp
-  curl -fsLO $(curl -sL https://macpac.draumaz.xyz/m2/index.html | \
+  printf "locating ${PKG_NAME}... "
+  NETPKG=$(curl -sL https://macpac.draumaz.xyz/m2/index.html | \
     tr '>' '\n' | tr '"' '\n' | grep https | grep `BASENAME`)
+  printf "found! (${NETPKG})\ninstalling ${PKG_NAME}... "
   bsdtar -xp ${VERB} -f `PKG_PATH` \
     --strip-components=2 \
     -C ${MACPAC_INSTALL_PATH}
+  find /tmp/ -maxdepth 1 -name "*.pkgz" -delete
   echo "done."
 }
 
@@ -86,10 +88,12 @@ install() {
 }
 
 case "${1}" in
-  i|install)    ACTIVE=install   ;; 
+  i|install)    ACTIVE=install    ;;
   n|netinstall) ACTIVE=netinstall ;;
-  u|uninstall)  ACTIVE=uninstall ;;
-  l|list) xist ;; w|wrap) wrap ${@} ;; h|help|*) xelp ;;
+  u|uninstall)  ACTIVE=uninstall  ;;
+  l|list)   xist      ;;
+  w|wrap)   wrap ${@} ;;
+  h|help|*) xelp      ;;
 esac
 
 case "${3}" in
