@@ -83,7 +83,7 @@ netinstall() {
 }
 
 install() {
-  printf "installing ${PKG_NAME}... "
+  printf "installing `PKG_PATH|tr '/' '\n'|tail -1`... "
   bsdtar -xp ${VERB} -f `PKG_PATH` \
     --strip-components=2 \
     -C ${MACPAC_INSTALL_PATH}
