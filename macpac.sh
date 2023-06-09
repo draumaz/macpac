@@ -66,6 +66,17 @@ uninstall() {
   echo "done."
 }
 
+netinstall() {
+  printf "netinstalling `BASENAME`... "
+  cd /tmp
+  curl -fsLO $(curl -sL https://macpac.draumaz.xyz/m2/index.html | \
+    tr '>' '\n' | tr '"' '\n' | grep https | grep `BASENAME`)
+  bsdtar -xp ${VERB} -f `PKG_PATH` \
+    --strip-components=2 \
+    -C ${MACPAC_INSTALL_PATH}
+  echo "done."
+}
+
 install() {
   printf "installing `BASENAME`... "
   bsdtar -xp ${VERB} -f `PKG_PATH` \
@@ -75,8 +86,9 @@ install() {
 }
 
 case "${1}" in
-  i|install)   ACTIVE=install   ;; 
-  u|uninstall) ACTIVE=uninstall ;;
+  i|install)    ACTIVE=install   ;; 
+  n|netinstall) ACTIVE=netinstall ;;
+  u|uninstall)  ACTIVE=uninstall ;;
   l|list) xist ;; w|wrap) wrap ${@} ;; h|help|*) xelp ;;
 esac
 
