@@ -44,7 +44,7 @@ BASENAME() {
 PKG_PATH() {
   find ${MACPAC_PKGS_PATH} \
     -name '*.pkgz' \
-    -and -name "*`BASENAME`*" | tail -1
+    -and -name "*${PKG_NAME}*" | tail -1
 }
 
 wrap() {
