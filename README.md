@@ -4,9 +4,9 @@
 
 # environment variables
 ```
-${MACPAC_PKGS_PATH} ~ a folder containing .pkgz files, a tarball with a packages file tree.
-${MACPAC_PKGS_PATH} ~ the path that you want macpac to install things.
-${MACPAC_VERBOSITY} ~ set to 'yes' for long, messy tar output!
+${MACPAC_PKGS_PATH}    ~ a folder containing .pkgz files, a tarball with a packages file tree.
+${MACPAC_INSTALL_PATH} ~ the path that you want macpac to install things.
+${MACPAC_VERBOSITY}    ~ set to 'yes' for long, messy tar output!
 ```
 - these can be pre-exported in a .profile.
 
