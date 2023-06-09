@@ -59,7 +59,7 @@ uninstall() {
   for i in `bsdtar -tf $(PKG_PATH)`; do
     case ${i} in
       # blacklisted prefixes (not skipping them causes bad things)
-      *local/|*locale/|*bin/|*include/|*lib/|*info/|*doc/|*opt/|*share/|*man/) ;;
+      *etc/|*local/|*locale/|*bin/|*include/|*lib/|*info/|*doc/|*opt/|*share/|*man/) ;;
       *) rm -rf ${VERB} /${i} ;;
     esac
   done
