@@ -66,6 +66,12 @@ uninstall() {
   echo "done."
 }
 
+netlist() {
+  curl -sL https://macpac.draumaz.xyz/m2/index.html | \
+    tr '>' '\n' | tr '"' '\n' | grep https | tr '/' '\n' | grep pkgz | \
+    sed 's/@/ (/g' | sed 's/.pkgz/)/g'
+}
+
 netinstall() {
   find /tmp/ -maxdepth 1 -name "*.pkgz" -delete
   cd /tmp
@@ -93,6 +99,7 @@ install() {
 case "${1}" in
   i|install)    ACTIVE=install    ;;
   n|netinstall) ACTIVE=netinstall ;;
+  nl|netlist)    ACTIVE=netlist ;;
   u|uninstall)  ACTIVE=uninstall  ;;
   l|list)   xist      ;;
   w|wrap)   wrap ${@} ;;
