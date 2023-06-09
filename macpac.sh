@@ -23,12 +23,15 @@ xist() {
 
 xelp() {
   cat << EOF
+[netinstall]
 macpac is a tiny package helper for macOS.
 
-$ macpac install   [pkg]
-$ macpac uninstall [pkg]
+$ macpac install    [pkg]
+$ macpac netinstall [pkg]
+$ macpac uninstall  [pkg]
 $ macpac help
 $ macpac list
+$ macpac netlist
 $ macpac wrap
 EOF
 exit 1
