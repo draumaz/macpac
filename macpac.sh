@@ -74,12 +74,15 @@ netlist() {
 netinstall() {
   find /tmp/ -maxdepth 1 -name '*.pkgz' -delete
   cd /tmp
-  printf 'locating ${PKG_NAME}... '
+  for i in 'locating' ${PKG_NAME} '...'; do printf $i; printf ' '; done
   NETPKG=$(curl -sL https://macpac.draumaz.xyz/m2/index.html | \
     tr '>' '\n' | tr '"' '\n' | grep https | grep ${PKG_NAME}) || true
-  case $NETPKG in '') printf 'not found.\n'; exit 1 ;; esac
-  curl -fLO ${NETPKG}
-  printf 'installing ${PKG_NAME}... '
+  case $NETPKG in
+    '') printf 'not found.\n'; exit 1 ;;
+    *) for i in 'found!' '~' ${NETPKG}; do printf $i; printf ' '; done
+  esac; printf '\n'
+  curl -sfLO ${NETPKG}
+  for i in 'installing' $(echo ${NETPKG} | tr '/' '\n' | tail -1) '...'; do printf $i; printf ' '; done
   bsdtar -xp ${VERB} -f $(find . -maxdepth 1 -name '*.pkgz') \
     --strip-components=2 \
     -C ${MACPAC_INSTALL_PATH}
