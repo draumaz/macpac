@@ -15,7 +15,7 @@ MACPAC_INSTALL_PATH="" # make sure you have r+w access!
 case ${MACPAC_VERBOSITY} in yes|1) VERB=-v ;; esac
 
 xist() {
-  find ${MACPAC_PKGS_PATH} -name "*.pkgz" | \
+  find ${MACPAC_PKGS_PATH} -name '*.pkgz' | \
     tr '/' '\n' | \
     grep '.pkgz' | sed 's/.pkgz//g' | sort
   exit 0
