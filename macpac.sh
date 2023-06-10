@@ -25,13 +25,13 @@ xelp() {
   cat << EOF
 macpac is a tiny package helper for macOS.
 
-$ macpac install    [pkg]
-$ macpac netinstall [pkg]
-$ macpac uninstall  [pkg]
-$ macpac help
-$ macpac list
-$ macpac netlist
-$ macpac wrap
+$ macpac i|install    [pkg]
+$ macpac n|netinstall [pkg]
+$ macpac u|uninstall  [pkg]
+$ macpac h|help
+$ macpac l|list
+$ macpac n|netlist
+$ macpac w|wrap
 EOF
 exit 1
 }
@@ -71,38 +71,34 @@ netlist() {
     tr '>' '\n' | tr '"' '\n' | grep https | tr '/' '\n' | grep pkgz | sed 's/.pkgz//g' | sort
 }
 
-netinstall() {
-  find /tmp/ -maxdepth 1 -name '*.pkgz' -delete
-  cd /tmp
-  for i in 'locating' ${PKG_NAME} '...'; do printf $i; printf ' '; done
-  NETPKG=$(curl -sL https://macpac.draumaz.xyz/m2/index.html | \
-    tr '>' '\n' | tr '"' '\n' | grep https | grep ${PKG_NAME}) || true
-  case $NETPKG in
-    '') printf 'not found.\n'; exit 1 ;;
-    *) for i in 'found!' '~' ${NETPKG}; do printf $i; printf ' '; done
-  esac; printf '\n'
-  curl -sfLO ${NETPKG}
-  for i in 'installing' $(echo ${NETPKG} | tr '/' '\n' | tail -1) '...'; do printf $i; printf ' '; done
-  bsdtar -xp ${VERB} -f $(find . -maxdepth 1 -name '*.pkgz') \
-    --strip-components=2 \
-    -C ${MACPAC_INSTALL_PATH}
-  find /tmp/ -maxdepth 1 -name '*.pkgz' -delete
-  echo 'done.'
-}
-
 install() {
-  for i in 'installing ' $(PKG_PATH | tr '/' '\n' | tail -1) '...'; do
-    printf $i; printf ' '
-  done
-  bsdtar -xp ${VERB} -f `PKG_PATH` \
-    --strip-components=2 \
-    -C ${MACPAC_INSTALL_PATH}
+  case $MODE in
+    local)
+      TARGET_PKG="$(PKG_PATH)"
+      TARGET_PKG_NAME="$(PKG_PATH | tr '/' '\n' | tail -1)"
+    ;;
+    net)
+      find /tmp/ -maxdepth 1 -name '*.pkgz' -delete
+      for i in 'locating' ${PKG_NAME} '...'; do printf $i; printf ' '; done
+      NETPKG=$(curl -sL https://macpac.draumaz.xyz/m2/index.html | \
+        tr '>' '\n' | tr '"' '\n' | grep https | grep ${PKG_NAME}) || true
+      case $NETPKG in
+        '') printf 'not found.\n'; exit 1 ;;
+        *) for i in 'found!' '~' ${NETPKG}; do printf $i; printf ' '; done
+      esac; printf '\n'
+      cd /tmp; curl -sfLO ${NETPKG}
+      TARGET_PKG="$(echo ${NETPKG} | tr '/' '\n' | tail -1)"
+      TARGET_PKG_NAME=${TARGET_PKG}
+    ;;
+  esac
+  for i in 'installing ' ${TARGET_PKG_NAME} '...'; do printf $i; printf ' '; done
+  bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
   echo 'done.'
 }
 
 case "${1}" in
-  i|install)     ACTIVE=install    ;;
-  n|netinstall)  ACTIVE=netinstall ;;
+  i|install)     MODE=local; ACTIVE=install ;;
+  n|netinstall)  MODE=net;   ACTIVE=install ;;
   nl|netlist)    ACTIVE=netlist    ;;
   u|uninstall)   ACTIVE=uninstall  ;;
   l|list)   xist      ;;
