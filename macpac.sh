@@ -49,7 +49,7 @@ PKG_PATH() {
 }
 
 wrap() {
-  printf 'wrapping ${2}.pkgz... '
+  for i in 'wrapping' ${2} '...'; do printf $i; printf ' '; done
   bsdtar -cz ${VERB} -f ${MACPAC_PKGS_PATH}/${2}.pkgz *
   printf 'done.'
   exit 0
