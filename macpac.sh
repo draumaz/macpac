@@ -67,7 +67,7 @@ uninstall() {
 }
 
 netlist() {
-  curl -sL https://macpac.draumaz.xyz/m2-rebuild/bin/index.html | \
+  curl -sL https://macpac.draumaz.xyz/m2/bin/index.html | \
     tr '>' '\n' | tr '"' '\n' | grep https | tr '/' '\n' | grep pkgz | sed 's/.pkgz//g' | sort
 }
 
@@ -80,7 +80,7 @@ install() {
     net)
       find /tmp/ -maxdepth 1 -name '*.pkgz' -delete
       for i in 'locating' ${PKG_NAME} '...'; do printf $i; printf ' '; done
-      NETPKG=$(curl -sL https://macpac.draumaz.xyz/m2-rebuild/bin/index.html | \
+      NETPKG=$(curl -sL https://macpac.draumaz.xyz/m2/bin/index.html | \
         tr '>' '\n' | tr '"' '\n' | grep https | grep ${PKG_NAME}) || true
       case $NETPKG in
         '') printf 'not found.\n'; exit 1 ;;
