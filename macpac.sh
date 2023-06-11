@@ -42,6 +42,8 @@ BASENAME() {
     tr '/' '\n' | sed 's/@.*//g' | tail -1
 }
 
+TAILGRAB() { echo "${1}" | tr "${2}" "\n" | tail -${3}; }
+
 # return direct path to BASENAME's .pkgz
 PKG_PATH() {
   find ${MACPAC_PKGS_PATH} \
@@ -86,12 +88,14 @@ install() {
         '') printf 'not found.\n'; exit 1 ;;
         *) for i in 'found!' '~' ${NETPKG}; do printf $i; printf ' '; done
       esac; printf '\n'
-      cd /tmp; curl -sfLO ${NETPKG}
-      TARGET_PKG="$(echo ${NETPKG} | tr '/' '\n' | tail -1)"
+      cd /tmp
+      for i in 'downloading' `TAILGRAB ${NETPKG} / 1` '...'; do printf $i; printf ' '; done
+      curl -sfLO ${NETPKG}; printf "done.\n"
+      TARGET_PKG=`TAILGRAB ${NETPKG} / 1`
       TARGET_PKG_NAME=${TARGET_PKG}
     ;;
   esac
-  for i in 'installing ' ${TARGET_PKG_NAME} '...'; do printf $i; printf ' '; done
+  for i in 'installing ' `TAILGRAB ${NETPKG} / 1` '...'; do printf $i; printf ' '; done
   bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
   echo 'done.'
 }
