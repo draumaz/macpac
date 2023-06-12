@@ -77,7 +77,7 @@ install() {
   case $MODE in
     local)
       TARGET_PKG="$(PKG_PATH)"
-      TARGET_PKG_NAME="$(PKG_PATH | tr '/' '\n' | tail -1)"
+#      TARGET_PKG_NAME="$(PKG_PATH | tr '/' '\n' | tail -1)"
     ;;
     net)
       find /tmp/ -maxdepth 1 -name '*.pkgz' -delete
@@ -95,7 +95,7 @@ install() {
       TARGET_PKG_NAME=${TARGET_PKG}
     ;;
   esac
-  for i in 'installing ' `TAILGRAB ${NETPKG} / 1` '...'; do printf $i; printf ' '; done
+  for i in 'installing ' `TAILGRAB ${TARGET_PKG} / 1` '...'; do printf $i; printf ' '; done
   bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
   echo 'done.'
 }
