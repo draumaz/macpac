@@ -52,15 +52,14 @@ install() {
       NETPKG=`curl -sL https://macpac.draumaz.xyz/m2/bin/index.html | \
         tr '>' '\n' | tr '"' '\n' | grep https | grep ${PKG_NAME}` || true
       cd /tmp
-      printf "Downloading `TAILGRAB ${NETPKG} / 1` "
-      curl -sfLO ${NETPKG}; printf "[*]\n"
+      printf "[`TAILGRAB ${NETPKG} / 1`] "
+      curl -sfLO ${NETPKG}; printf "📁"
       TARGET_PKG=`TAILGRAB ${NETPKG} / 1`
       TARGET_PKG_NAME=${TARGET_PKG}
     ;;
   esac
-  printf "Installing  `TAILGRAB ${TARGET_PKG} / 1` "
   bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
-  printf "[*]\n"
+  printf "✅\n"
 }
 
 case "${1}" in
