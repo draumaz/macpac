@@ -46,26 +46,21 @@ uninstall() {
 
 install() {
   case $MODE in
-    local) TARGET_PKG="$(PKG_PATH)" ;;
+    local) TARGET_PKG="`PKG_PATH`" ;;
     net)
       find /tmp/ -maxdepth 1 -name '*.pkgz' -delete
-      for i in 'locating' ${PKG_NAME} '...'; do printf $i; printf ' '; done
-      NETPKG=$(curl -sL https://macpac.draumaz.xyz/m2/bin/index.html | \
-        tr '>' '\n' | tr '"' '\n' | grep https | grep ${PKG_NAME}) || true
-      case $NETPKG in
-        '') printf 'not found.\n'; exit 1 ;;
-        *) for i in 'found!' '~' ${NETPKG}; do printf $i; printf ' '; done
-      esac; printf '\n'
+      NETPKG=`curl -sL https://macpac.draumaz.xyz/m2/bin/index.html | \
+        tr '>' '\n' | tr '"' '\n' | grep https | grep ${PKG_NAME}` || true
       cd /tmp
-      for i in 'downloading' `TAILGRAB ${NETPKG} / 1` '...'; do printf $i; printf ' '; done
-      curl -sfLO ${NETPKG}; printf "done.\n"
+      printf "Downloading `TAILGRAB ${NETPKG} / 1` "
+      curl -sfLO ${NETPKG}; printf "[*]\n"
       TARGET_PKG=`TAILGRAB ${NETPKG} / 1`
       TARGET_PKG_NAME=${TARGET_PKG}
     ;;
   esac
-  for i in 'installing ' `TAILGRAB ${TARGET_PKG} / 1` '...'; do printf $i; printf ' '; done
+  printf "Installing  `TAILGRAB ${TARGET_PKG} / 1` "
   bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
-  echo 'done.'
+  printf "[*]\n"
 }
 
 case "${1}" in
