@@ -52,7 +52,7 @@ install() {
         tr '>' '\n' | tr '"' '\n' | grep https | grep ${PKG_NAME}` || true
       cd /tmp
       printf "[`TAILGRAB ${NETPKG} / 1`] "
-      curl -sfLO ${NETPKG}; printf "📁"
+      curl -sfLO ${NETPKG}; printf "🔄"
       TARGET_PKG=`TAILGRAB ${NETPKG} / 1`
       TARGET_PKG_NAME=${TARGET_PKG}
     ;;
