@@ -4,6 +4,7 @@
 
 case ${MACPAC_VERBOSITY} in yes|1) VERB=-v ;; esac
 MACPAC_INDEX="https://macpac.draumaz.xyz/m2/bin/index.html"
+#MACPAC_INDEX="https://macpac.draumaz.xyz/`sysctl -n machdep.cpu.brand_string | awk {'print $2'}`/`sw_vers -productversion`bin/index.html"
 
 BASENAME() { echo ${PKG_NAME} | tr '/' '\n' | sed 's/@.*//g' | tail -1; }
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
@@ -27,21 +28,19 @@ exit 1
 }
 
 wrap() {
-  for i in 'wrapping' ${2} '...'; do printf $i; printf ' '; done
   bsdtar -cz ${VERB} -f ${MACPAC_PKGS_PATH}/${2}.pkgz *
-  printf 'done.'
-  exit 0
+  printf '✅\n'; exit 0
 }
 
 uninstall() {
-  printf 'uninstalling `BASENAME`... '
   for i in `bsdtar -tf $(PKG_PATH)`; do
     case ${i} in
       # blacklisted prefixes (not skipping them causes bad things)
       *etc/|*local/|*locale/|*bin/|*include/|*lib/|*info/|*doc/|*opt/|*share/|*man/) ;;
       *) rm -rf ${VERB} /${i} ;;
     esac
-  done; echo 'done.'
+  done
+  printf '✅\n'; exit 0
 }
 
 install() {
