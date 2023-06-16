@@ -2,24 +2,14 @@
 
 # macpac | draumaz (2023)
 
-## begin config ##
-case ${MACPAC_PKGS_PATH} in '')
-MACPAC_PKGS_PATH="" # point to a directory containing .pkgz files.
-;; esac
-
-case ${MACPAC_INSTALL_PATH} in '')
-MACPAC_INSTALL_PATH="" # make sure you have r+w access!
-;; esac
-## end   config ##
-
 case ${MACPAC_VERBOSITY} in yes|1) VERB=-v ;; esac
+MACPAC_INDEX="https://macpac.draumaz.xyz/m2/bin/index.html"
 
-xist() {
-  find ${MACPAC_PKGS_PATH} -name '*.pkgz' | \
-    tr '/' '\n' | \
-    grep '.pkgz' | sed 's/.pkgz//g' | sort
-  exit 0
-}
+BASENAME() { echo ${PKG_NAME} | tr '/' '\n' | sed 's/@.*//g' | tail -1; }
+TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
+PKG_PATH() { find ${MACPAC_PKGS_PATH} -name '*.pkgz' -and -name "*${PKG_NAME}*" | tail -1; }
+XLIST() { find ${MACPAC_PKGS_PATH} -name '*.pkgz' | tr '/' '\n' | grep '.pkgz' | sed 's/.pkgz//g' | sort; exit 0; }
+NLIST() { curl -sL ${MACPAC_INDEX} | tr '>' '\n' | tr '"' '\n' | grep https | tr '/' '\n' | grep pkgz | sed 's/.pkgz//' | sort; }
 
 xelp() {
   cat << EOF
@@ -34,20 +24,6 @@ $ macpac n|netlist
 $ macpac w|wrap
 EOF
 exit 1
-}
-
-# return basic name for display
-BASENAME() {
-  echo ${PKG_NAME} | \
-    tr '/' '\n' | sed 's/@.*//g' | tail -1
-}
-
-TAILGRAB() { echo "${1}" | tr "${2}" "\n" | tail -${3}; }
-
-# return direct path to BASENAME's .pkgz
-PKG_PATH() {
-  find ${MACPAC_PKGS_PATH} \
-    -name '*.pkgz' -and -name "*${PKG_NAME}*" | tail -1
 }
 
 wrap() {
@@ -68,17 +44,9 @@ uninstall() {
   done; echo 'done.'
 }
 
-netlist() {
-  curl -sL https://macpac.draumaz.xyz/m2/bin/index.html | \
-    tr '>' '\n' | tr '"' '\n' | grep https | tr '/' '\n' | grep pkgz | sed 's/.pkgz//g' | sort
-}
-
 install() {
   case $MODE in
-    local)
-      TARGET_PKG="$(PKG_PATH)"
-#      TARGET_PKG_NAME="$(PKG_PATH | tr '/' '\n' | tail -1)"
-    ;;
+    local) TARGET_PKG="$(PKG_PATH)" ;;
     net)
       find /tmp/ -maxdepth 1 -name '*.pkgz' -delete
       for i in 'locating' ${PKG_NAME} '...'; do printf $i; printf ' '; done
@@ -101,16 +69,16 @@ install() {
 }
 
 case "${1}" in
-  i|install)     MODE=local; ACTIVE=install ;;
-  n|netinstall)  MODE=net;   ACTIVE=install ;;
-  nl|netlist)    ACTIVE=netlist    ;;
-  u|uninstall)   ACTIVE=uninstall  ;;
-  l|list)   xist      ;;
+  i|install)     MODE=local; ACTIVE=install   ;;
+  n|netinstall)  MODE=net;   ACTIVE=install   ;;
+  nl|netlist)                ACTIVE=NLIST     ;;
+  u|uninstall)               ACTIVE=uninstall ;;
   w|wrap)   wrap ${@} ;;
-  h|help|*) xelp      ;;
+  l|list)   XLIST     ;;
+  h|help|*) XELP      ;;
 esac
 
 case "${3}" in
-  "") PKG_NAME="$2"; $ACTIVE ${PKG} ;;
+  '') PKG_NAME="$2"; $ACTIVE ${PKG} ;;
   *) shift; for PKG in ${@}; do PKG_NAME=${PKG}; ${ACTIVE} ${PKG}; done ;;
 esac
