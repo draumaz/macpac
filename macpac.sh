@@ -75,7 +75,7 @@ case "${1}" in
   u|uninstall)               ACTIVE=uninstall ;;
   w|wrap)   wrap ${@} ;;
   l|list)   XLIST     ;;
-  h|help|*) XELP      ;;
+  h|help|*) xelp      ;;
 esac
 
 case "${3}" in
