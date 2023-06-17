@@ -52,11 +52,12 @@ install() {
         tr '>' '\n' | tr '"' '\n' | grep https | grep ${PKG_NAME}` || true
       cd /tmp
       printf "[`TAILGRAB ${NETPKG} / 1`] "
-      curl -sfLO ${NETPKG}; printf "🔄"
+      printf "🔄"; curl -sfLO ${NETPKG}; printf "✅ "
       TARGET_PKG=`TAILGRAB ${NETPKG} / 1`
       TARGET_PKG_NAME=${TARGET_PKG}
     ;;
   esac
+  printf "🔁"
   bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
   printf "✅\n"
 }
