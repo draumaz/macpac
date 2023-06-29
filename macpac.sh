@@ -32,10 +32,9 @@ NLIST() { curl -sL ${MACPAC_INDEX} | tr '>' '\n' | tr '"' '\n' | grep https | tr
 wrap() { bsdtar -cz ${VERB} -f ${MACPAC_PKGS_PATH}/${2}.pkgz *; printf ${SUCCESS}\n; exit 0; }
 
 pkg_get() {
-  find /tmp/ -maxdepth 1 -name '*.pkgz' -delete
-  NETPKG=$(curl -sL https://macpac.draumaz.xyz/m2/bin/index.html | \
-    tr '>' '\n' | tr '"' '\n' | grep https | grep ${PKG_NAME}) || true
-  cd /tmp
+  NETPKG=$(curl -sL ${MACPAC_INDEX} | tr '>' '\n' | tr '"' '\n' | \
+    grep https | grep ${PKG_NAME}) || true
+  find /tmp/ -maxdepth 1 -name '*.pkgz' -delete; cd /tmp
   printf "*DOWNLOAD* | $(TAILGRAB ${NETPKG} / 1) ${LOADING}"
   curl -sfLO ${NETPKG}; printf "${SUCCESS}\n"
   TARGET_PKG=$(TAILGRAB ${NETPKG} / 1); TARGET_PKG_NAME=${TARGET_PKG}
