@@ -4,7 +4,7 @@
 
 # preparation
 
-- decide on a good install path. i like /opt/local, but you can literally set anything.
+- decide on a good install path. i like /opt/local, but you can literally set it to anything.
 ```
 export MACPAC_INSTALL_PATH="/usr/opt/src/lib/man/man46/opt/bin/local"
 sudo mkdir -pv ${MACPAC_INSTALL_PATH}
