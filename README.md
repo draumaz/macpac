@@ -5,7 +5,7 @@
 
 ### if you don't set these up, the fallback draumaz/m2 repo and /opt/local INSTALL_PATH will be used.
 
-- set up or find a repository. you just need a text file with direct HTML links to some Slackware-style tarballs.
+- set up or find a repository. you just need a text file with a-href'd links to some Slackware-style tarballs.
 ```
 $ export MACPAC_REPO="https://macpac.draumaz.xyz/m2/bin/index.html"
 $ curl -sL ${MACPAC_REPO} | head -2
