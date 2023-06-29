@@ -62,8 +62,8 @@ install() {
 case "${1}" in
   i|install)     ACTIVE=install   ;;
   u|uninstall)   ACTIVE=uninstall ;;
-  l|list)   NLIST    ;;
-  h|help|*) NHELP    ;;
+  l|list)   NLIST     ;;
+  h|help|*) INHELP    ;;
 esac
 
 case "${3}" in
