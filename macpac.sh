@@ -36,8 +36,8 @@ pkg_get() {
   NETPKG=$(curl -sL https://macpac.draumaz.xyz/m2/bin/index.html | \
     tr '>' '\n' | tr '"' '\n' | grep https | grep ${PKG_NAME}) || true
   cd /tmp
-  printf "*DOWNLOAD* | $(TAILGRAB ${NETPKG} / 1) "
-  printf ${LOADING}; curl -sfLO ${NETPKG}; printf "${SUCCESS}\n"
+  printf "*DOWNLOAD* | $(TAILGRAB ${NETPKG} / 1) ${LOADING}"
+  curl -sfLO ${NETPKG}; printf "${SUCCESS}\n"
   TARGET_PKG=$(TAILGRAB ${NETPKG} / 1); TARGET_PKG_NAME=${TARGET_PKG}
 }
 
