@@ -3,36 +3,29 @@
 # macpac | draumaz (2023)
 
 case ${MACPAC_VERBOSITY} in yes|1) VERB=-v ;; esac
-MACPAC_INDEX="https://macpac.draumaz.xyz/m2/bin/index.html"
-#MACPAC_INDEX="https://macpac.draumaz.xyz/`sysctl -n machdep.cpu.brand_string | awk {'print $2'}`/`sw_vers -productversion`bin/index.html"
+
+MACPAC_REPO="https://macpac.draumaz.xyz/m2/bin/index.html"
 
 SUCCESS="✅ "; LOADING="🔁"
 
+TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
+NLIST() { curl -sL ${MACPAC_INDEX} | tr '>' '\n' | \
+  tr '"' '\n' | grep https | tr '/' '\n' | grep pkgz | sed 's/.pkgz//' | sort; }
+
 INHELP() {
   cat << EOF
-macpac is a tiny package helper for macOS.
+macpac is a tiny network package installer for macOS.
 
 $ macpac i|install    [pkg]
-$ macpac n|netinstall [pkg]
 $ macpac u|uninstall  [pkg]
 $ macpac h|help
 $ macpac l|list
-$ macpac n|netlist
-$ macpac w|wrap
 EOF
 exit 1
 }
 
-BASENAME() { echo ${PKG_NAME} | tr '/' '\n' | sed 's/@.*//g' | tail -1; }
-TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
-PKG_PATH() { find ${MACPAC_PKGS_PATH} -name '*.pkgz' -and -name "*${PKG_NAME}*" | tail -1; }
-XLIST() { find ${MACPAC_PKGS_PATH} -name '*.pkgz' | tr '/' '\n' | grep '.pkgz' | sed 's/.pkgz//g' | sort; exit 0; }
-NLIST() { curl -sL ${MACPAC_INDEX} | tr '>' '\n' | tr '"' '\n' | grep https | tr '/' '\n' | grep pkgz | sed 's/.pkgz//' | sort; }
-
-wrap() { bsdtar -cz ${VERB} -f ${MACPAC_PKGS_PATH}/${2}.pkgz *; printf ${SUCCESS}\n; exit 0; }
-
 pkg_get() {
-  NETPKG=$(curl -sL ${MACPAC_INDEX} | tr '>' '\n' | tr '"' '\n' | \
+  NETPKG=$(curl -sL ${MACPAC_REPO} | tr '>' '\n' | tr '"' '\n' | \
     grep https | grep ${PKG_NAME}) || true
   find /tmp/ -maxdepth 1 -name '*.pkgz' -delete; cd /tmp
   printf "*DOWNLOAD* | $(TAILGRAB ${NETPKG} / 1) ${LOADING}"
@@ -41,10 +34,7 @@ pkg_get() {
 }
 
 uninstall() {
-  case $MODE in
-    local) TARGET_PKG="`PKG_PATH`" ;;
-    net) pkg_get $PKG_NAME ;; 
-  esac
+  pkg_get ${PKG_NAME}
   printf "!UNINSTALL! | ${TARGET_PKG} ${LOADING}"
   for i in `bsdtar -tf ${TARGET_PKG}`; do
     case ${i} in
@@ -57,24 +47,17 @@ uninstall() {
 }
 
 install() {
-  case $MODE in
-    local) TARGET_PKG="`PKG_PATH`" ;;
-    net) pkg_get $PKG_NAME ;; 
-  esac
+  pkg_get ${PKG_NAME}
   printf "*INSTALL * | ${TARGET_PKG} ${LOADING}"
   bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
   printf "${SUCCESS}\n"
 }
 
 case "${1}" in
-  i|install)     MODE=local; ACTIVE=install   ;;
-  n|netinstall)  MODE=net;   ACTIVE=install   ;;
-  u|uninstall)   MODE=local; ACTIVE=uninstall ;;
-  nu|netuninst)  MODE=net;   ACTIVE=uninstall ;;
-  w|wrap)     wrap ${@} ;;
-  l|list)     XLIST     ;;
-  nl|netlist) NLIST     ;;
-  h|help|*)   INHELP    ;;
+  i|install)     ACTIVE=install   ;;
+  u|uninstall)   ACTIVE=uninstall ;;
+  l|list)   NLIST    ;;
+  h|help|*) NHELP    ;;
 esac
 
 case "${3}" in
