@@ -27,6 +27,12 @@ stats
 - install path      | ${MACPAC_INSTALL_PATH}
 - launch binary     | ${0}
 - active repository | ${MACPAC_REPO}
+
+commands
+--------
+- macpac install    | install a package
+- macpac uninstall  | remove a package
+- macpac list       | list all packages in repo
 EOF
 exit 1
 }
