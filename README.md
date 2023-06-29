@@ -9,6 +9,13 @@ $ export MACPAC_REPO="https://macpac.draumaz.xyz/m2/bin/index.html"
 $ curl -sL ${MACPAC_REPO} | head -2
 <a href="https://macpac.draumaz.xyz/m2/bin/gnupg/gnupg@2.4.2.tar.gz">gnupg/gnupg@2.4.2.tar.gz</a> <br>
 <a href="https://macpac.draumaz.xyz/m2/bin/gnupg/libassuan@2.5.5.tar.gz">gnupg/libassuan@2.5.5.tar.gz</a> <br>
+$ tar -tf libassuan@2.5.5.tar.gz
+...
+opt/local/share/aclocal/libassuan.m4
+opt/local/lib/pkgconfig/
+opt/local/lib/libassuan.la
+opt/local/lib/libassuan.dylib
+...
 ```
 
 - decide on a good install path. i like /opt/local, but you can literally set it to anything.
