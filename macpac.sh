@@ -70,7 +70,6 @@ install() {
 case "${1}" in
   i|install)     MODE=local; ACTIVE=install   ;;
   n|netinstall)  MODE=net;   ACTIVE=install   ;;
-  nl|netlist)                ACTIVE=NLIST     ;;
   u|uninstall)   MODE=local; ACTIVE=uninstall ;;
   nu|netuninst)  MODE=net;   ACTIVE=uninstall ;;
   w|wrap)     wrap ${@} ;;
