@@ -1,7 +1,9 @@
 # macpac
 - a tiny network package installer for macOS.
 
-# preparation
+# optional preparation
+
+### if you don't set these up, the fallback draumaz/m2 repo and /opt/local INSTALL_PATH will be used.
 
 - set up or find a repository. you just need a text file with direct HTML links to some Slackware-style tarballs.
 ```
@@ -24,8 +26,6 @@ export MACPAC_INSTALL_PATH="/usr/opt/src/lib/man/man46/opt/bin/local"
 sudo mkdir -pv ${MACPAC_INSTALL_PATH}
 sudo chown -Rv {your_username} ${MACPAC_INSTALL_PATH}
 ```
-
-- without customization, ```${MACPAC_INSTALL_PATH}``` will default to ```/opt/local```; and ```${MACPAC_REPO}``` to ```https://macpac.draumaz.xyz/m2/bin/index.html```.
 
 # usage
 - installing couldn't be easier.
