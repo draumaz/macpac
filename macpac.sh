@@ -11,7 +11,7 @@ esac
 NULL=""; SUCCESS="✅ "; LOADING="🔁"
 
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
-NLIST() { curl -sL ${MACPAC_INDEX} | tr '>' '\n' | \
+NLIST() { curl -sL ${MACPAC_REPO} | tr '>' '\n' | \
   tr '"' '\n' | grep https | tr '/' '\n' | grep pkgz | sed 's/.pkgz//' | sort; }
 
 INHELP() {
