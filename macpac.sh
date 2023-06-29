@@ -12,7 +12,7 @@ case ${MACPAC_INSTALL_PATH} in '')
   MACPAC_INSTALL_PATH="/opt/local" ;;
 esac
 
-NULL=""; SUCCESS="✅ "; LOADING="🔁"
+SUCCESS="✅ "; LOADING="🔁"
 
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
 NLIST() { curl -sL ${MACPAC_REPO} | tr '>' '\n' | \
