@@ -25,6 +25,8 @@ sudo mkdir -pv ${MACPAC_INSTALL_PATH}
 sudo chown -Rv {your_username} ${MACPAC_INSTALL_PATH}
 ```
 
+- without customization, ${MACPAC_INSTALL_PATH} will default to ```/opt/local```; and ${MACPAC_REPO} to ```https://macpac.draumaz.xyz/m2/bin/index.html```.
+
 # usage
 - installing couldn't be easier.
 ```
