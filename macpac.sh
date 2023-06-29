@@ -37,8 +37,8 @@ pkg_get() {
   NETPKG=$(curl -sL https://macpac.draumaz.xyz/m2/bin/index.html | \
     tr '>' '\n' | tr '"' '\n' | grep https | grep ${PKG_NAME}) || true
   cd /tmp
-  printf "[$(TAILGRAB ${NETPKG} / 1)] "
-  printf ${LOADING}; curl -sfLO ${NETPKG}; printf "${SUCCESS}"
+  printf "[DOWNLOAD] [$(TAILGRAB ${NETPKG} / 1)] "
+  printf ${LOADING}; curl -sfLO ${NETPKG}; printf "${SUCCESS}\n"
   TARGET_PKG=$(TAILGRAB ${NETPKG} / 1); TARGET_PKG_NAME=${TARGET_PKG}
 }
 
@@ -47,6 +47,7 @@ uninstall() {
     local) TARGET_PKG="`PKG_PATH`" ;;
     net) pkg_get $PKG_NAME ;; 
   esac
+  printf "[UNINSTALL] [${TARGET_PKG}] ${LOADING}"
   for i in `bsdtar -tf ${TARGET_PKG}`; do
     case ${i} in
       # blacklisted paths (not skipping them causes bad things)
@@ -62,7 +63,7 @@ install() {
     local) TARGET_PKG="`PKG_PATH`" ;;
     net) pkg_get $PKG_NAME ;; 
   esac
-  printf "${LOADING}"
+  printf "[INSTALL] [${TARGET_PKG}] ${LOADING}"
   bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
   printf "${SUCCESS}\n"
 }
