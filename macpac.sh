@@ -20,12 +20,13 @@ NLIST() { curl -sL ${MACPAC_REPO} | tr '>' '\n' | \
 
 INHELP() {
   cat << EOF
-macpac is a tiny network package installer for macOS.
+macpac, by draumaz (2023) [v0.1]
 
-$ macpac i|install    [pkg]
-$ macpac u|uninstall  [pkg]
-$ macpac h|help
-$ macpac l|list
+stats
+--------
+- install path      | ${MACPAC_INSTALL_PATH}
+- launch binary     | ${0}
+- active repository | ${MACPAC_REPO}
 EOF
 exit 1
 }
