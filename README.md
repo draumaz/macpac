@@ -8,7 +8,7 @@
 ```
 export MACPAC_INSTALL_PATH="/usr/opt/src/lib/man/man46/opt/bin/local"
 sudo mkdir -pv ${MACPAC_INSTALL_PATH}
-sudo chown -Rv {your_username} ${MACPAC_INSTALL_PATH}
+sudo chown -Rv {YOUR_USERNAME} ${MACPAC_INSTALL_PATH}
 ```
 
 # usage
