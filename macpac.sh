@@ -13,14 +13,16 @@ case ${MACPAC_INSTALL_PATH} in '')
 esac
 
 SUCCESS="✅ "; LOADING="🔁"
+MACPAC_VERSION="v0.1"
 
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
+VERSION() { printf "macpac, ${MACPAC_VERSION}\n"; exit 0; }
 NLIST() { curl -sL ${MACPAC_REPO} | tr '>' '\n' | \
   tr '"' '\n' | grep https | tr '/' '\n' | grep tar.gz | sed 's/.tar.gz//' | sort; }
 
 INHELP() {
   cat << EOF
-macpac, by draumaz (2023) [v0.1]
+macpac, by draumaz (2023) [${MACPAC_VERSION}]
 
 stats
 --------
@@ -46,7 +48,7 @@ pkg_get() {
   TARGET_PKG=$(TAILGRAB ${NETPKG} / 1); TARGET_PKG_NAME=${TARGET_PKG}
 }
 
-uninstall() {
+UNINSTALL() {
   pkg_get ${PKG_NAME}
   printf "!UNINSTALL! | ${TARGET_PKG} ${LOADING}"
   for i in `bsdtar -tf ${TARGET_PKG}`; do
@@ -59,7 +61,7 @@ uninstall() {
   printf "${SUCCESS}\n"; exit 0
 }
 
-install() {
+INSTALL() {
   pkg_get ${PKG_NAME}
   printf "*INSTALL * | ${TARGET_PKG} ${LOADING}"
   bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
@@ -67,10 +69,11 @@ install() {
 }
 
 case "${1}" in
-  i|install)     ACTIVE=install   ;;
-  u|uninstall)   ACTIVE=uninstall ;;
-  l|list)   NLIST     ;;
-  h|help|*) INHELP    ;;
+  i|install|-i|--install)       ACTIVE=INSTALL   ;;
+  u|uninstall|-u|--uninstall)   ACTIVE=UNINSTALL ;;
+  l|list|-l|--list)             ACTIVE=NLIST     ;;
+  h|help|-h|--help)             ACTIVE=INHELP    ;;
+  v|version|-v|--version)       ACTIVE=VERSION   ;;
 esac
 
 case "${3}" in
