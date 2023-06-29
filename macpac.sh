@@ -4,9 +4,9 @@
 
 case ${MACPAC_VERBOSITY} in yes|1) VERB=-v ;; esac
 
-MACPAC_REPO="https://macpac.draumaz.xyz/m2/bin/index.html"
+NULL=""; SUCCESS="✅ "; LOADING="🔁"
 
-SUCCESS="✅ "; LOADING="🔁"
+case ${MACPAC_REPO} in $NULL) MACPAC_REPO=$MACPAC_REPO_BACKUP ;; esac
 
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
 NLIST() { curl -sL ${MACPAC_INDEX} | tr '>' '\n' | \
