@@ -3,15 +3,15 @@
 - supply a link to some tarballs, and macpac will handle the rest.
 
 # usage
+- installing couldn't be easier.
 ```
-# installing couldn't be easier.
-
 $ macpac install autoconf
 *DOWNLOAD* | autoconf@2.71.pkgz 🔁✅
 *INSTALL * | autoconf@2.71.pkgz 🔁✅
+```
 
-# it really works!
-
+- ...and to verify install:
+```
 $ find ${MACPAC_INSTALL_PATH} -name '*autoconf*'
 /opt/local/bin/autoconf
 /opt/local/share/man/man1/autoconf.1
