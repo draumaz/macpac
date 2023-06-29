@@ -1,8 +1,15 @@
 # macpac
 - a tiny network package installer for macOS.
-- supply a link to some tarballs, and macpac will handle the rest.
 
 # preparation
+
+- set up or find a repository. you just need a text file with direct HTML links to the tarballs.
+```
+$ export MACPAC_REPO="https://macpac.draumaz.xyz/m2/bin/index.html"
+$ curl -sL ${MACPAC_REPO} | head -2
+<a href="https://macpac.draumaz.xyz/m2/bin/gnupg/gnupg@2.4.2.tar.gz">gnupg/gnupg@2.4.2.tar.gz</a> <br>
+<a href="https://macpac.draumaz.xyz/m2/bin/gnupg/libassuan@2.5.5.tar.gz">gnupg/libassuan@2.5.5.tar.gz</a> <br>
+```
 
 - decide on a good install path. i like /opt/local, but you can literally set it to anything.
 ```
