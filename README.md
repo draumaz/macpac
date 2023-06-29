@@ -5,10 +5,13 @@
 # usage
 ```
 # installing couldn't be easier.
+
 $ macpac install autoconf
 *DOWNLOAD* | autoconf@2.71.pkgz 🔁✅
 *INSTALL * | autoconf@2.71.pkgz 🔁✅
+
 # it really works!
+
 $ find ${MACPAC_INSTALL_PATH} -name '*autoconf*'
 /opt/local/bin/autoconf
 /opt/local/share/man/man1/autoconf.1
