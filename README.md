@@ -2,6 +2,15 @@
 - a tiny network package installer for macOS.
 - supply a link to some tarballs, and macpac will handle the rest.
 
+# preparation
+
+- decide on a good install path. i like /opt/local, but you can literally set anything.
+```
+export MACPAC_INSTALL_PATH="/usr/opt/src/lib/man/man46/opt/bin/local"
+sudo mkdir -pv ${MACPAC_INSTALL_PATH}
+sudo chown -Rv {your_username} ${MACPAC_INSTALL_PATH}
+```
+
 # usage
 - installing couldn't be easier.
 ```
