@@ -6,8 +6,7 @@ case ${MACPAC_VERBOSITY} in yes|1) VERB=-v ;; esac
 MACPAC_INDEX="https://macpac.draumaz.xyz/m2/bin/index.html"
 #MACPAC_INDEX="https://macpac.draumaz.xyz/`sysctl -n machdep.cpu.brand_string | awk {'print $2'}`/`sw_vers -productversion`bin/index.html"
 
-SUCCESS="✅ "
-LOADING="🔁"
+SUCCESS="✅ "; LOADING="🔁"
 
 INHELP() {
   cat << EOF
