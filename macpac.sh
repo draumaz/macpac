@@ -8,6 +8,10 @@ case ${MACPAC_REPO} in '')
   MACPAC_REPO="https://macpac.draumaz.xyz/m2/bin/index.html" ;;
 esac
 
+case ${MACPAC_INSTALL_PATH} in '')
+  MACPAC_INSTALL_PATH="/opt/local" ;;
+esac
+
 NULL=""; SUCCESS="✅ "; LOADING="🔁"
 
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }

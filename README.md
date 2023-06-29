@@ -2,6 +2,20 @@
 - a tiny network package installer for macOS.
 - supply a link to some tarballs, and macpac will handle the rest.
 
+# usage
+```
+# installing couldn't be easier.
+$ macpac install autoconf
+*DOWNLOAD* | autoconf@2.71.pkgz 🔁✅
+*INSTALL * | autoconf@2.71.pkgz 🔁✅
+# it really works!
+$ find ${MACPAC_INSTALL_PATH} -name '*autoconf*'
+/opt/local/bin/autoconf
+/opt/local/share/man/man1/autoconf.1
+/opt/local/share/info/autoconf.info
+...
+```
+
 # my macpac repository
 - i maintain a hearty collection of M2-built Unix tools. feel free to use them!
 ```
