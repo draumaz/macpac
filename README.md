@@ -1,25 +1,25 @@
 # macpac
 - a tiny network package installer for macOS.
 
-# optional preparation
-
-### if you don't set these up, the fallback draumaz/m2 repo and /opt/local INSTALL_PATH will be used.
-
-- set up or find a repository. you just need a text file with a-href'd links to some Slackware-style tarballs.
+# repository management
+- a macpac repository consists of an ```index.html``` with a bunch of a-href'd hyperlinks to tarballs.
 ```
 $ export MACPAC_REPO="https://macpac.draumaz.xyz/m2/bin/index.html"
 $ curl -sL ${MACPAC_REPO} | head -2
 <a href="https://macpac.draumaz.xyz/m2/bin/gnupg/gnupg@2.4.2.tar.gz">gnupg/gnupg@2.4.2.tar.gz</a> <br>
 <a href="https://macpac.draumaz.xyz/m2/bin/gnupg/libassuan@2.5.5.tar.gz">gnupg/libassuan@2.5.5.tar.gz</a> <br>
-$ tar -tf libassuan@2.5.5.tar.gz
+```
+- these tarballs are Slackware-style file trees that you can directly untar into an install prefix.
+```
+$ tar -tf libassuan@2.5.5.tar
 ...
-opt/local/share/aclocal/libassuan.m4
+opt/local/share/info/assuan.info
 opt/local/lib/pkgconfig/
 opt/local/lib/libassuan.la
-opt/local/lib/libassuan.dylib
 ...
 ```
 
+# export install path
 - decide on a good install path. i like /opt/local, but you can literally set it to anything.
 ```
 export MACPAC_INSTALL_PATH="/usr/opt/src/lib/man/man46/opt/bin/local"
