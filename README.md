@@ -3,7 +3,7 @@
 
 # preparation
 
-- set up or find a repository. you just need a text file with direct HTML links to the tarballs.
+- set up or find a repository. you just need a text file with direct HTML links to some Slackware-style tarballs.
 ```
 $ export MACPAC_REPO="https://macpac.draumaz.xyz/m2/bin/index.html"
 $ curl -sL ${MACPAC_REPO} | head -2
