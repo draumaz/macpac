@@ -18,12 +18,13 @@ ${MACPAC_HEADER}
 
 commands
 --------
-* macpac install   [PKG]
-* macpac uninstall [PKG]
-* macpac examine   [PKG]
-* macpac help
-* macpac list
-* macpac stats
+* macpac --install   [PKG]
+* macpac --uninstall [PKG]
+* macpac --examine   [PKG]
+* macpac --help
+* macpac --list
+* macpac --selfup
+* macpac --stats
 EOF
 exit 1
 }
@@ -48,6 +49,16 @@ RECEIVE() {
   printf "*DOWNLOAD* | `TAILGRAB ${NETPKG} / 1` ${LOADING}"
   curl -sfLO ${NETPKG}; printf "${SUCCESS}\n"
   TARGET_PKG=`TAILGRAB ${NETPKG} / 1`; TARGET_PKG_NAME=${TARGET_PKG}
+}
+
+SELFUP() {
+  SLP="${MACPAC_INSTALL_PATH}/bin"
+  curl -L https://github.com/draumaz/macpac/archive/refs/heads/main.tar.gz | \
+    tar -xpzvf - \
+      --strip-components=1 \
+      -C ${SLP} \
+      macpac-main/macpac.sh
+  mv -v ${SLP}/macpac.sh ${SLP}/macpac
 }
 
 STATS() {
@@ -87,6 +98,7 @@ case "${1}" in
   e|examine|-e|--examine)     ACTIVE=EXAMINE   ;;
   l|list|-l|--list)           ACTIVE=LIST      ;;
   s|stats|-s|--stats)         ACTIVE=STATS     ;;
+  su|selfup|-su|--selfup)     ACTIVE=SELFUP    ;;
   v|version|-v|--version)     ACTIVE=VERSION   ;;
   h|help|-h|--help|*)         ACTIVE=DEFHELP   ;;
 esac;
