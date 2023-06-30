@@ -38,24 +38,26 @@ sudo chown -Rv {your_username} ${MACPAC_INSTALL_PATH}
 ```
 
 # usage
-- installing couldn't be easier.
+- retrieving and installing packages couldn't be easier.
 ```
 $ macpac install autoconf
 *DOWNLOAD* | autoconf@2.71.pkgz 🔁✅
 *INSTALL * | autoconf@2.71.pkgz 🔁✅
 ```
 
-- ...and to verify install:
+- ..verifying install is simple too:
 ```
 $ find ${MACPAC_INSTALL_PATH} -name '*autoconf*'
 /opt/local/bin/autoconf
 /opt/local/share/man/man1/autoconf.1
-/opt/local/share/info/autoconf.info
+/opt/local/share/info/autoconf.info/
 ...
 ```
 
-# my macpac repository
-- i maintain a hearty collection of M2-built Unix tools called ```opt-out-of-air```. feel free to use them!
+# repositories
+
+## draumaz/opt-out-of-air
+- M2 MacBook-Air-exclusively built, general purpose packages. install path is /opt/local.
 ```
 $ export MACPAC_REPO="https://macpac.draumaz.xyz/opt-out-of-air/bin/index.html"
 $ macpac list
