@@ -20,9 +20,9 @@ macpac, by draumaz (2023) [${MACPAC_VERSION}]
 
 stats
 --------
-- install path      | ${MACPAC_INSTALL_PATH}
-- launch binary     | ${0}
-- active repository | ${MACPAC_REPO}
+- MACPAC_INSTALL_PATH | ${MACPAC_INSTALL_PATH}
+- MACPAC_REPO         | ${MACPAC_REPO}
+- execute path        | ${0}
 
 commands
 --------
