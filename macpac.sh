@@ -78,7 +78,7 @@ REMOVE() {
       *) rm -rf ${VERB} /${i} ;;
     esac
   done
-  printf "${SUCCESS}\n"; exit 0
+  printf "${SUCCESS}\n"
 }
 
 # this little guy likes to mess with syntax highlighting :c
