@@ -69,10 +69,11 @@ ${MACPAC_HEADER}
 
 stats
 --------
-* MACPAC_INSTALL_PATH | ${MACPAC_INSTALL_PATH} `TOUCHY ${MACPAC_INSTALL_PATH} " [no r/w]"`
-* MACPAC_REPO         | ${MACPAC_REPO}
-* execute path        | ${0}
+
+* installing to:      | ${MACPAC_INSTALL_PATH} `TOUCHY ${MACPAC_INSTALL_PATH} " [no r/w]"`
 * installation size   | `du -sh ${MACPAC_INSTALL_PATH} | awk '{print $1}'`
+* execute path        | ${0}
+* active repo         | ${MACPAC_REPO}
 EOF
 }
 
