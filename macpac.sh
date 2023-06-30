@@ -12,12 +12,13 @@ case ${MACPAC_INSTALL_PATH} in '')
   MACPAC_INSTALL_PATH="/opt/local" ;;
 esac
 
-SUCCESS="✅ "; LOADING="🔁"
 MACPAC_VERSION="v0.1"
+VERSION() { printf "macpac, ${MACPAC_VERSION}\n"; exit 0; }
+
+SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
 
 TMP_WIPE() { find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; }
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
-VERSION() { printf "macpac, ${MACPAC_VERSION}\n"; exit 0; }
 EXAMINE() { PKG_GET ${PKG_NAME}; bsdtar -tf ${TARGET_PKG}; TMP_WIPE; exit 0; }
 NLIST() { curl -sL ${MACPAC_REPO} | tr '>' '\n' | \
   tr '"' '\n' | grep https | tr '/' '\n' | grep tar.gz | sed 's/.tar.gz//' | sort; }
