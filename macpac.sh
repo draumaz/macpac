@@ -3,7 +3,7 @@
 test -z ${MACPAC_INSTALL_PATH} && MACPAC_INSTALL_PATH="/opt/local"
 test -z ${MACPAC_REPO} && MACPAC_REPO="https://macpac.draumaz.xyz/repos/opt-out-of-air/bin/index.html"
 
-MACPAC_VERSION="v0.1";MACPAC_HEADER="macpac, by draumaz (2023) [${MACPAC_VERSION}]"
+MACPAC_VERSION="v0.1"; MACPAC_HEADER="macpac, by draumaz (2023) [${MACPAC_VERSION}]"
 SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
 
 EXAMINE()  { RECEIVE ${PKG_NAME}; bsdtar -tf ${TARGET_PKG}; TMP_WIPE; exit 0; }
