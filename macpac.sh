@@ -88,7 +88,7 @@ case "${1}" in
   i|install|-i|--install|\
   a|add|-a|--add)             ACTIVE=INSTALL   ;;
   u|uninstall|-u|--uninstall|\
-  r|remove|-r|--remove)       ACTIVE=REMOVE    ;; #
+  r|remove|-r|--remove)       ACTIVE=REMOVE    ;;
   e|examine|-e|--examine)     ACTIVE=EXAMINE   ;;
   l|list|-l|--list)           ACTIVE=LIST      ;;
   s|stats|-s|--stats)         ACTIVE=STATS     ;;
