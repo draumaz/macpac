@@ -38,7 +38,7 @@ INSTALL() {
 LIST() {
   curl -sL ${MACPAC_REPO} | \
     grep 'https' | tr '"' '\n' | grep 'https' | \
-    tr '/' '\n' | grep 'tar.gz' | sed 's/.tar.gz//g'
+    tr '/' '\n' | grep 'tar.gz' | sed 's/.tar.gz//'
 }
 
 RECEIVE() {
