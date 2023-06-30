@@ -86,13 +86,13 @@ UNINSTALL() {
 case "${MACPAC_VERBOSITY}" in 1|yes) VERB=-v ;; esac;
 
 case "${1}" in
-  i|install|-i|--install)       ACTIVE=INSTALL   ;;
-  u|uninstall|-u|--uninstall)   ACTIVE=UNINSTALL ;;
-  e|examine|-e|--examine)       ACTIVE=EXAMINE   ;;
-  l|list|-l|--list)             ACTIVE=LIST      ;;
-  s|stats|-s|--stats)           ACTIVE=STATS     ;;
-  v|version|-v|--version)       ACTIVE=VERSION   ;;
-  h|help|-h|--help|*)           ACTIVE=DEFHELP   ;;
+  i|install|-i|--install)     ACTIVE=INSTALL   ;;
+  u|uninstall|-u|--uninstall) ACTIVE=UNINSTALL ;;
+  e|examine|-e|--examine)     ACTIVE=EXAMINE   ;;
+  l|list|-l|--list)           ACTIVE=LIST      ;;
+  s|stats|-s|--stats)         ACTIVE=STATS     ;;
+  v|version|-v|--version)     ACTIVE=VERSION   ;;
+  h|help|-h|--help|*)         ACTIVE=DEFHELP   ;;
 esac
 
 case "${3}" in
