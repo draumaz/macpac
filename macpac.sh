@@ -1,7 +1,7 @@
 #!/usr/bin/env bash -e
 
 case ${MACPAC_VERBOSITY} in yes|1) VERB=-v ;; esac
-case ${MACPAC_REPO} in '') MACPAC_REPO="https://macpac.draumaz.xyz/opt-out-of-air/bin/index.html" ;; esac
+case ${MACPAC_REPO} in '') MACPAC_REPO="https://macpac.draumaz.xyz/repos/opt-out-of-air/bin/index.html" ;; esac
 case ${MACPAC_INSTALL_PATH} in '') MACPAC_INSTALL_PATH="/opt/local" ;; esac
 
 MACPAC_VERSION="v0.1"
