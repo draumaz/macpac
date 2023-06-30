@@ -18,7 +18,7 @@ MACPAC_VERSION="v0.1"
 TMP_WIPE() { find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; }
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
 VERSION() { printf "macpac, ${MACPAC_VERSION}\n"; exit 0; }
-EXAMINE() { pkg_get ${PKG_NAME}; bsdtar -tf ${TARGET_PKG}; TMP_WIPE; exit 0; }
+EXAMINE() { PKG_GET ${PKG_NAME}; bsdtar -tf ${TARGET_PKG}; TMP_WIPE; exit 0; }
 NLIST() { curl -sL ${MACPAC_REPO} | tr '>' '\n' | \
   tr '"' '\n' | grep https | tr '/' '\n' | grep tar.gz | sed 's/.tar.gz//' | sort; }
 
@@ -43,7 +43,7 @@ EOF
 exit 1
 }
 
-pkg_get() {
+PKG_GET() {
   NETPKG=$(curl -sL ${MACPAC_REPO} | tr '>' '\n' | tr '"' '\n' | \
     grep https | grep ${PKG_NAME}) || true
   TMP_WIPE; cd /tmp
@@ -53,7 +53,7 @@ pkg_get() {
 }
 
 UNINSTALL() {
-  pkg_get ${PKG_NAME}
+  PKG_GET ${PKG_NAME}
   printf "!UNINSTALL! | ${TARGET_PKG} ${LOADING}"
   for i in `bsdtar -tf ${TARGET_PKG}`; do
     case ${i} in
@@ -66,7 +66,7 @@ UNINSTALL() {
 }
 
 INSTALL() {
-  pkg_get ${PKG_NAME}
+  PKG_GET ${PKG_NAME}
   printf "*INSTALL * | ${TARGET_PKG} ${LOADING}"
   bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
   printf "${SUCCESS}\n"
