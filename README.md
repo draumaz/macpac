@@ -56,7 +56,7 @@ $ find ${MACPAC_INSTALL_PATH} -name '*autoconf*'
 
 # repositories
 
-## draumaz/opt-out-of-air
+## draumaz/[opt-out-of-air](https://macpac.draumaz.xyz/repos/opt-out-of-air)
 - M2 MacBook-Air-exclusively built, general purpose packages. install path is /opt/local.
 ```
 $ export MACPAC_REPO="https://macpac.draumaz.xyz/opt-out-of-air/bin/index.html"
