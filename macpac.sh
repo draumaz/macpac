@@ -89,7 +89,7 @@ case "${1}" in
   s|stats|-s|--stats)         ACTIVE=STATS     ;;
   v|version|-v|--version)     ACTIVE=VERSION   ;;
   h|help|-h|--help|*)         ACTIVE=DEFHELP   ;;
-esac
+esac;
 
 case "${3}" in
   '') PKG_NAME="$2"; $ACTIVE ${PKG} ;;
