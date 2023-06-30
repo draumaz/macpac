@@ -29,7 +29,7 @@ opt/local/lib/libassuan.la
 ...
 ```
 
-# export install path
+# create an install path
 - decide on a good install path. i like /opt/local, but you can literally set it to anything.
 ```
 export MACPAC_INSTALL_PATH="/usr/opt/src/lib/man/man46/opt/bin/local"
@@ -59,8 +59,7 @@ $ find ${MACPAC_INSTALL_PATH} -name '*autoconf*'
 ## draumaz/[opt-out-of-air](https://macpac.draumaz.xyz/repos/opt-out-of-air)
 - M2 MacBook-Air-exclusively built, general purpose packages. install path is /opt/local.
 ```
-$ export MACPAC_REPO="https://macpac.draumaz.xyz/opt-out-of-air/bin/index.html"
-$ macpac list
+$ MACPAC_REPO="https://macpac.draumaz.xyz/opt-out-of-air/bin/index.html" macpac list
 autoconf@2.71
 automake@1.16.5
 cmake@3.27.0-rc2
