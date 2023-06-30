@@ -28,6 +28,9 @@ EOF
 exit 1
 }
 
+DEPCHECK() {
+  RECEIVE `${PKG_NAME}}
+
 INSTALL() {
   RECEIVE ${PKG_NAME}
   printf "*INSTALL * | ${TARGET_PKG} ${LOADING}"
