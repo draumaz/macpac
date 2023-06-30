@@ -20,17 +20,18 @@ macpac, by draumaz (2023) [${MACPAC_VERSION}]
 
 stats
 --------
-- MACPAC_INSTALL_PATH | ${MACPAC_INSTALL_PATH}
-- MACPAC_REPO         | ${MACPAC_REPO}
-- execute path        | ${0}
+* MACPAC_INSTALL_PATH | ${MACPAC_INSTALL_PATH}
+* MACPAC_REPO         | ${MACPAC_REPO}
+* execute path        | ${0}
+* installation size   | `du -sh ${MACPAC_INSTALL_PATH} | awk '{print $1}'`
 
 commands
 --------
-- macpac install   [PKG]
-- macpac uninstall [PKG]
-- macpac examine   [PKG]
-- macpac list
-- macpac help
+* macpac install   [PKG]
+* macpac uninstall [PKG]
+* macpac examine   [PKG]
+* macpac list
+* macpac help
 EOF
 exit 1
 }
