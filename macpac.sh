@@ -1,5 +1,6 @@
 #!/bin/sh -e
 
+# fallback variables if none are found in env
 test -z ${MACPAC_INSTALL_PATH} && MACPAC_INSTALL_PATH="/opt/local"
 test -z ${MACPAC_REPO} && MACPAC_REPO="https://macpac.draumaz.xyz/repos/opt-out-of-air/bin/index.html"
 
