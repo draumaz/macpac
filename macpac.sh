@@ -81,7 +81,7 @@ REMOVE() {
   printf "${SUCCESS}\n"; exit 0
 }
 
-# this little line likes to mess with syntax highlighting :c
+# this little guy likes to mess with syntax highlighting :c
 case "${MACPAC_VERBOSITY}" in 1|yes) VERB=-v ;; esac;
 
 case "${1}" in
