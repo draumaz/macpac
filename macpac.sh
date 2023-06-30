@@ -3,28 +3,14 @@
 test -z ${MACPAC_INSTALL_PATH} && MACPAC_INSTALL_PATH="/opt/local"
 test -z ${MACPAC_REPO} && MACPAC_REPO="https://macpac.draumaz.xyz/repos/opt-out-of-air/bin/index.html"
 
-MACPAC_VERSION="v0.1"
 MACPAC_HEADER="macpac, by draumaz (2023) [${MACPAC_VERSION}]"
-SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
+MACPAC_VERSION="v0.1"; SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
 
-TOUCHY()   { touch ${1} > /dev/null 2>&1 || { printf "${FAILURE}${2}\n"; }; }
-TMP_WIPE() { find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; }
-TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
-VERSION()  { printf "macpac, ${MACPAC_VERSION}\n"; exit 0; }
 EXAMINE()  { PKG_GET ${PKG_NAME}; bsdtar -tf ${TARGET_PKG}; TMP_WIPE; exit 0; }
-
-STATS() {
-  cat << EOF
-${MACPAC_HEADER}
-
-stats
---------
-* MACPAC_INSTALL_PATH | ${MACPAC_INSTALL_PATH} `TOUCHY ${MACPAC_INSTALL_PATH} " [no r/w]"`
-* MACPAC_REPO         | ${MACPAC_REPO}
-* execute path        | ${0}
-* installation size   | `du -sh ${MACPAC_INSTALL_PATH} | awk '{print $1}'`
-EOF
-}
+TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
+TMP_WIPE() { find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; }
+TOUCHY()   { touch ${1} > /dev/null 2>&1 || { printf "${FAILURE}${2}\n"; }; }
+VERSION()  { printf "macpac, ${MACPAC_VERSION}\n"; exit 0; }
 
 DEFHELP() {
   cat << EOF
@@ -40,6 +26,13 @@ commands
 * macpac stats
 EOF
 exit 1
+}
+
+INSTALL() {
+  PKG_GET ${PKG_NAME}
+  printf "*INSTALL * | ${TARGET_PKG} ${LOADING}"
+  bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
+  printf "${SUCCESS}\n"
 }
 
 LIST() {
@@ -62,11 +55,17 @@ PKG_GET() {
   TARGET_PKG=$(TAILGRAB ${NETPKG} / 1); TARGET_PKG_NAME=${TARGET_PKG}
 }
 
-INSTALL() {
-  PKG_GET ${PKG_NAME}
-  printf "*INSTALL * | ${TARGET_PKG} ${LOADING}"
-  bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
-  printf "${SUCCESS}\n"
+STATS() {
+  cat << EOF
+${MACPAC_HEADER}
+
+stats
+--------
+* MACPAC_INSTALL_PATH | ${MACPAC_INSTALL_PATH} `TOUCHY ${MACPAC_INSTALL_PATH} " [no r/w]"`
+* MACPAC_REPO         | ${MACPAC_REPO}
+* execute path        | ${0}
+* installation size   | `du -sh ${MACPAC_INSTALL_PATH} | awk '{print $1}'`
+EOF
 }
 
 UNINSTALL() {
