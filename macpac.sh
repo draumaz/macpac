@@ -15,8 +15,10 @@ esac
 SUCCESS="✅ "; LOADING="🔁"
 MACPAC_VERSION="v0.1"
 
+TMP_WIPE() { find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; }
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
 VERSION() { printf "macpac, ${MACPAC_VERSION}\n"; exit 0; }
+EXAMINE() { pkg_get ${PKG_NAME}; bsdtar -tf ${TARGET_PKG}; TMP_WIPE; exit 0; }
 NLIST() { curl -sL ${MACPAC_REPO} | tr '>' '\n' | \
   tr '"' '\n' | grep https | tr '/' '\n' | grep tar.gz | sed 's/.tar.gz//' | sort; }
 
@@ -32,9 +34,11 @@ stats
 
 commands
 --------
-- macpac install    | install a package
-- macpac uninstall  | remove a package
-- macpac list       | list all packages in repo
+- macpac install   [PKG]
+- macpac uninstall [PKG]
+- macpac examine   [PKG]
+- macpac list
+- macpac help
 EOF
 exit 1
 }
@@ -42,7 +46,7 @@ exit 1
 pkg_get() {
   NETPKG=$(curl -sL ${MACPAC_REPO} | tr '>' '\n' | tr '"' '\n' | \
     grep https | grep ${PKG_NAME}) || true
-  find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; cd /tmp
+  TMP_WIPE; cd /tmp
   printf "*DOWNLOAD* | $(TAILGRAB ${NETPKG} / 1) ${LOADING}"
   curl -sfLO ${NETPKG}; printf "${SUCCESS}\n"
   TARGET_PKG=$(TAILGRAB ${NETPKG} / 1); TARGET_PKG_NAME=${TARGET_PKG}
@@ -71,9 +75,10 @@ INSTALL() {
 case "${1}" in
   i|install|-i|--install)       ACTIVE=INSTALL   ;;
   u|uninstall|-u|--uninstall)   ACTIVE=UNINSTALL ;;
+  e|examine|-e|--examine)       ACTIVE=EXAMINE   ;;
   l|list|-l|--list)             ACTIVE=NLIST     ;;
-  h|help|-h|--help)             ACTIVE=INHELP    ;;
   v|version|-v|--version)       ACTIVE=VERSION   ;;
+  h|help|-h|--help|*)           ACTIVE=INHELP    ;;
 esac
 
 case "${3}" in
