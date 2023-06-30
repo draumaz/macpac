@@ -1,5 +1,16 @@
 # macpac
-- a tiny network package installer for macOS.
+```
+macpac, by draumaz (2023) [v0.1]
+
+stats
+--------
+
+* installing to:      | /opt/local
+* installation size   | 427M
+* execute path        | /opt/local/bin/macpac
+* active repo         | https://macpac.draumaz.xyz/repos/opt-out-of-air/bin/index.html
+```
+- a tiny HTTPS-based package installer for macOS, written in (near)-POSIX shell.
 
 # repository management
 - a macpac repository consists of an ```index.html``` with a bunch of a-href'd hyperlinks to tarballs.
