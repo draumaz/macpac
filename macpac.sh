@@ -6,7 +6,8 @@ test -z ${MACPAC_REPO} && MACPAC_REPO="https://macpac.draumaz.xyz/repos/opt-out-
 MACPAC_VERSION="v0.1"; MACPAC_HEADER="macpac, by draumaz (2023) [${MACPAC_VERSION}]"
 SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
 
-EXAMINE()  { RECEIVE ${PKG_NAME}; bsdtar -tf ${TARGET_PKG}; TMP_WIPE; exit 0; }
+BINS()     { find ${MACPAC_INSTALL_PATH}/bin -type f | sed 's|/opt/local/bin/||g'; }
+EXAMINE()  { RECEIVE ${PKG_NAME}; bsdtar -tf ${TARGET_PKG}; TMP_WIPE; }
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
 TMP_WIPE() { find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; }
 TOUCHY()   { touch ${1} > /dev/null 2>&1 || { printf "${FAILURE}${2}\n"; }; }
@@ -21,6 +22,7 @@ commands
 * macpac --install   [PKG]
 * macpac --uninstall [PKG]
 * macpac --examine   [PKG]
+* macpac --bins
 * macpac --help
 * macpac --list
 * macpac --selfup
@@ -95,6 +97,7 @@ case "${1}" in
   a|add|-a|--add)             ACTIVE=INSTALL   ;;
   u|uninstall|-u|--uninstall|\
   r|remove|-r|--remove)       ACTIVE=REMOVE    ;;
+  b|bins|-b|--bins)           ACTIVE=BINS      ;;
   e|examine|-e|--examine)     ACTIVE=EXAMINE   ;;
   l|list|-l|--list)           ACTIVE=LIST      ;;
   s|stats|-s|--stats)         ACTIVE=STATS     ;;
