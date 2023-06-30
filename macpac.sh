@@ -35,14 +35,18 @@ INSTALL() {
   printf "${SUCCESS}\n"
 }
 
-LIST() { curl -sL ${MACPAC_REPO} | grep 'https' | tr '"' '\n' | grep 'tar.gz' | grep 'https' | sort; }
+LIST() {
+  curl -sL ${MACPAC_REPO} | \
+    grep 'https' | tr '"' '\n' | grep 'https' | \
+    tr '/' '\n' | grep 'tar.gz' | sed 's/.tar.gz//g'
+}
 
 RECEIVE() {
   NETPKG=`curl -sL ${MACPAC_REPO} | tr '>' '\n' | tr '"' '\n' | \
     grep https | grep ${PKG_NAME}` || true
   TMP_WIPE; cd /tmp
   printf "*DOWNLOAD* | $(TAILGRAB ${NETPKG} / 1) ${LOADING}"
-  curl -sfLO ${NETPKG}; printf "${SUCCESS}\n"
+  curl -fLO ${NETPKG}; printf "${SUCCESS}\n"
   TARGET_PKG=`TAILGRAB ${NETPKG} / 1`; TARGET_PKG_NAME=${TARGET_PKG}
 }
 
