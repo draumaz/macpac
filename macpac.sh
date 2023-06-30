@@ -7,6 +7,7 @@ case ${MACPAC_INSTALL_PATH} in '') MACPAC_INSTALL_PATH="/opt/local" ;; esac
 MACPAC_VERSION="v0.1"
 SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
 
+TOUCHY() { touch ${1} > /dev/null 2>&1 || { printf "${FAILURE}${2}\n"; }; }
 TMP_WIPE() { find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; }
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
 VERSION() { printf "macpac, ${MACPAC_VERSION}\n"; exit 0; }
@@ -20,7 +21,7 @@ macpac, by draumaz (2023) [${MACPAC_VERSION}]
 
 stats
 --------
-* MACPAC_INSTALL_PATH | ${MACPAC_INSTALL_PATH}
+* MACPAC_INSTALL_PATH | ${MACPAC_INSTALL_PATH} `TOUCHY ${MACPAC_INSTALL_PATH} "[no r/w]"`
 * MACPAC_REPO         | ${MACPAC_REPO}
 * execute path        | ${0}
 * installation size   | `du -sh ${MACPAC_INSTALL_PATH} | awk '{print $1}'`
