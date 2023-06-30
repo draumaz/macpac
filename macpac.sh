@@ -19,7 +19,7 @@ ${MACPAC_HEADER}
 commands
 --------
 * macpac install   [PKG]
-* macpac uninstall [PKG]
+* macpac REMOVE [PKG]
 * macpac examine   [PKG]
 * macpac help
 * macpac list
@@ -68,9 +68,9 @@ stats
 EOF
 }
 
-UNINSTALL() {
+REMOVE() {
   RECEIVE ${PKG_NAME}
-  printf "!UNINSTALL! | ${TARGET_PKG} ${LOADING}"
+  printf "*REMOVE*   | ${TARGET_PKG} ${LOADING}"
   for i in `bsdtar -tf ${TARGET_PKG}`; do
     case ${i} in
       # blacklisted paths (not skipping them causes bad things)
@@ -85,8 +85,10 @@ UNINSTALL() {
 case "${MACPAC_VERBOSITY}" in 1|yes) VERB=-v ;; esac;
 
 case "${1}" in
-  i|install|-i|--install)     ACTIVE=INSTALL   ;;
-  u|uninstall|-u|--uninstall) ACTIVE=UNINSTALL ;;
+  i|install|-i|--install|\
+  a|add|-a|--add)             ACTIVE=INSTALL   ;;
+  u|uninstall|-u|--uninstall|\
+  r|remove|-r|--remove)       ACTIVE=REMOVE    ;; #
   e|examine|-e|--examine)     ACTIVE=EXAMINE   ;;
   l|list|-l|--list)           ACTIVE=LIST      ;;
   s|stats|-s|--stats)         ACTIVE=STATS     ;;
