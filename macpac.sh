@@ -6,7 +6,7 @@ test -z ${MACPAC_REPO} && MACPAC_REPO="https://macpac.draumaz.xyz/repos/opt-out-
 MACPAC_HEADER="macpac, by draumaz (2023) [${MACPAC_VERSION}]"
 MACPAC_VERSION="v0.1"; SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
 
-EXAMINE()  { PKG_GET ${PKG_NAME}; bsdtar -tf ${TARGET_PKG}; TMP_WIPE; exit 0; }
+EXAMINE()  { RECEIVE ${PKG_NAME}; bsdtar -tf ${TARGET_PKG}; TMP_WIPE; exit 0; }
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
 TMP_WIPE() { find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; }
 TOUCHY()   { touch ${1} > /dev/null 2>&1 || { printf "${FAILURE}${2}\n"; }; }
@@ -29,7 +29,7 @@ exit 1
 }
 
 INSTALL() {
-  PKG_GET ${PKG_NAME}
+  RECEIVE ${PKG_NAME}
   printf "*INSTALL * | ${TARGET_PKG} ${LOADING}"
   bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
   printf "${SUCCESS}\n"
@@ -46,7 +46,7 @@ LIST() {
     sort
 }
 
-PKG_GET() {
+RECEIVE() {
   NETPKG=$(curl -sL ${MACPAC_REPO} | tr '>' '\n' | tr '"' '\n' | \
     grep https | grep ${PKG_NAME}) || true
   TMP_WIPE; cd /tmp
@@ -69,7 +69,7 @@ EOF
 }
 
 UNINSTALL() {
-  PKG_GET ${PKG_NAME}
+  RECEIVE ${PKG_NAME}
   printf "!UNINSTALL! | ${TARGET_PKG} ${LOADING}"
   for i in `bsdtar -tf ${TARGET_PKG}`; do
     case ${i} in
