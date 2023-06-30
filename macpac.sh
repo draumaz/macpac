@@ -19,7 +19,7 @@ ${MACPAC_HEADER}
 commands
 --------
 * macpac install   [PKG]
-* macpac REMOVE [PKG]
+* macpac uninstall [PKG]
 * macpac examine   [PKG]
 * macpac help
 * macpac list
@@ -71,7 +71,7 @@ REMOVE() {
       # blacklisted paths (not skipping them causes bad things)
       *etc/|*local/|*locale/|*bin/|*include/|*lib/|*info/|*doc/|*opt/|*share/|*man/) ;;
       *) rm -rf ${VERB} /${i} ;;
-    esac;
+    esac
   done
   printf "${SUCCESS}\n"
 }
@@ -89,9 +89,9 @@ case "${1}" in
   s|stats|-s|--stats)         ACTIVE=STATS     ;;
   v|version|-v|--version)     ACTIVE=VERSION   ;;
   h|help|-h|--help|*)         ACTIVE=DEFHELP   ;;
-esac;
+esac
 
 case "${3}" in
   '') PKG_NAME="$2"; $ACTIVE ${PKG} ;;
   *) shift; for PKG in ${@}; do PKG_NAME=${PKG}; ${ACTIVE} ${PKG}; done ;;
-esac;
+esac
