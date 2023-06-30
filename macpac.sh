@@ -35,16 +35,7 @@ INSTALL() {
   printf "${SUCCESS}\n"
 }
 
-LIST() {
-  curl -sL ${MACPAC_REPO} | \
-    tr '>' '\n' | \
-    tr '"' '\n' | \
-    grep https | \
-    tr '/' '\n' | \
-    grep tar.gz | \
-    sed 's/.tar.gz//' | \
-    sort
-}
+LIST() { curl -sL ${MACPAC_REPO} | grep 'https' | tr '"' '\n' | grep 'tar.gz' | grep 'https' | sort; }
 
 RECEIVE() {
   NETPKG=`curl -sL ${MACPAC_REPO} | tr '>' '\n' | tr '"' '\n' | \
