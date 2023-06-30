@@ -40,7 +40,7 @@ sudo chown -Rv {your_username} ${MACPAC_INSTALL_PATH}
 # usage
 - retrieving and installing packages couldn't be easier.
 ```
-$ macpac install autoconf
+$ macpac --install autoconf
 *DOWNLOAD* | autoconf@2.71.pkgz 🔁✅
 *INSTALL * | autoconf@2.71.pkgz 🔁✅
 ```
@@ -52,6 +52,34 @@ $ find ${MACPAC_INSTALL_PATH} -name '*autoconf*'
 /opt/local/share/man/man1/autoconf.1
 /opt/local/share/info/autoconf.info/
 ...
+```
+
+- more commands for your discerning palette:
+```
+$ macpac --examine which
+*DOWNLOAD* | which@2.21.tar.gz 🔁✅
+opt/
+opt/local/
+opt/local/bin/
+opt/local/share/
+opt/local/share/man/
+opt/local/share/info/
+opt/local/share/info/which.info
+...
+```
+```
+$ macpac --remove vim
+*DOWNLOAD* | vim@9.0.1636.tar.gz 🔁✅
+*REMOVE*   | vim@9.0.1636.tar.gz 🔁✅
+```
+```
+$ macpac --bins
+lzmainfo
+chronic
+sponge
+gpgtar
+ccmake
+... # it's all your ${MACPAC_INSTALL_PATH}/bin files ;)
 ```
 
 # repositories
