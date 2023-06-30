@@ -1,17 +1,19 @@
-#!/usr/bin/env bash -e
+#!/bin/sh -e
 
 case ${MACPAC_VERBOSITY} in yes|1) VERB=-v ;; esac
-case ${MACPAC_REPO} in '') MACPAC_REPO="https://macpac.draumaz.xyz/repos/opt-out-of-air/bin/index.html" ;; esac
-case ${MACPAC_INSTALL_PATH} in '') MACPAC_INSTALL_PATH="/opt/local" ;; esac
+
+test -z ${MACPAC_INSTALL_PATH} && MACPAC_INSTALL_PATH="/opt/local"
+test -z ${MACPAC_REPO} && MACPAC_REPO="https://macpac.draumaz.xyz/repos/opt-out-of-air/bin/index.html"
 
 MACPAC_VERSION="v0.1"
 SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
 
-TOUCHY() { touch ${1} > /dev/null 2>&1 || { printf "${FAILURE}${2}\n"; }; }
+TOUCHY()   { touch ${1} > /dev/null 2>&1 || { printf "${FAILURE}${2}\n"; }; }
 TMP_WIPE() { find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; }
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
-VERSION() { printf "macpac, ${MACPAC_VERSION}\n"; exit 0; }
-EXAMINE() { PKG_GET ${PKG_NAME}; bsdtar -tf ${TARGET_PKG}; TMP_WIPE; exit 0; }
+VERSION()  { printf "macpac, ${MACPAC_VERSION}\n"; exit 0; }
+EXAMINE()  { PKG_GET ${PKG_NAME}; bsdtar -tf ${TARGET_PKG}; TMP_WIPE; exit 0; }
+
 NLIST() { curl -sL ${MACPAC_REPO} | tr '>' '\n' | \
   tr '"' '\n' | grep https | tr '/' '\n' | grep tar.gz | sed 's/.tar.gz//' | sort; }
 
