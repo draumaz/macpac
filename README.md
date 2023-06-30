@@ -45,7 +45,7 @@ $ macpac install autoconf
 *INSTALL * | autoconf@2.71.pkgz 🔁✅
 ```
 
-- ..verifying install is simple too:
+- ...verifying install is simple too:
 ```
 $ find ${MACPAC_INSTALL_PATH} -name '*autoconf*'
 /opt/local/bin/autoconf
