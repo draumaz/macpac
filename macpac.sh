@@ -6,7 +6,7 @@ test -z ${MACPAC_INSTALL_PATH} && MACPAC_INSTALL_PATH="/opt/local"
 MACPAC_VERSION="v0.1"; MACPAC_HEADER="macpac, by draumaz (2023) [${MACPAC_VERSION}]"
 SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
 
-BINS()     { find ${MACPAC_INSTALL_PATH}/bin -type f | sed 's|/opt/local/bin/||g'; }
+BINS()     { find ${MACPAC_INSTALL_PATH}/bin -type f | sed "s|${MACPAC_INSTALL_PATH}/bin/||g"; }
 EXAMINE()  { RECEIVE ${PKG_NAME}; bsdtar -tf ${TARGET_PKG} | less; TMP_WIPE; }
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
 TMP_WIPE() { find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; }
@@ -55,12 +55,14 @@ RECEIVE() {
 
 SELFUP() {
   SLP="${MACPAC_INSTALL_PATH}/bin"
-  curl -L https://github.com/draumaz/macpac/archive/refs/heads/main.tar.gz | \
-    tar -xpzvf - \
+  ls -al ${SLP}/macpac
+  curl -sL https://github.com/draumaz/macpac/archive/refs/heads/main.tar.gz | \
+    tar -xpzf - \
       --strip-components=1 \
       -C ${SLP} \
       macpac-main/macpac.sh
-  mv -v ${SLP}/macpac.sh ${SLP}/macpac
+  mv ${SLP}/macpac.sh ${SLP}/macpac
+  ls -al ${SLP}/macpac
 }
 
 STATS() {
