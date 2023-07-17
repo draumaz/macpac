@@ -7,7 +7,7 @@ MACPAC_VERSION="v0.1"; MACPAC_HEADER="macpac, by draumaz (2023) [${MACPAC_VERSIO
 SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
 
 BINS()     { find ${MACPAC_INSTALL_PATH}/bin -type f | sed 's|/opt/local/bin/||g'; }
-EXAMINE()  { RECEIVE ${PKG_NAME}; bsdtar -tf ${TARGET_PKG}; TMP_WIPE; }
+EXAMINE()  { RECEIVE ${PKG_NAME}; bsdtar -tf ${TARGET_PKG} | less; TMP_WIPE; }
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
 TMP_WIPE() { find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; }
 TOUCHY()   { touch ${1} > /dev/null 2>&1 || { printf "${FAILURE}${2}\n"; }; }
