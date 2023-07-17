@@ -55,7 +55,8 @@ RECEIVE() {
 
 SELFUP() {
   SLP="${MACPAC_INSTALL_PATH}/bin"
-  ls -al ${SLP}/macpac
+  mkdir -p "${SLP}"
+  ls -al ${SLP}/macpac || true
   curl -sL https://github.com/draumaz/macpac/archive/refs/heads/main.tar.gz | \
     tar -xpzf - \
       --strip-components=1 \
