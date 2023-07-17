@@ -15,6 +15,8 @@ stats
 # repository management
 - a macpac repository consists of an ```index.html``` with a bunch of a-href'd hyperlinks to tarballs.
 ```
+$ echo ${MACPAC_REPO}
+$ https://macpac.draumaz.xyz/repos/opt-out-of-air/bin
 $ curl -sL ${MACPAC_REPO} | head -2
 <a href="https://macpac.draumaz.xyz/m2/bin/gnupg/gnupg@2.4.2.tar.gz">gnupg/gnupg@2.4.2.tar.gz</a> <br>
 <a href="https://macpac.draumaz.xyz/m2/bin/gnupg/libassuan@2.5.5.tar.gz">gnupg/libassuan@2.5.5.tar.gz</a> <br>
@@ -87,7 +89,7 @@ ccmake
 ## draumaz/[opt-out-of-air](https://macpac.draumaz.xyz/repos/opt-out-of-air)
 - M2 MacBook-Air-exclusively built, general purpose packages. install path is /opt/local.
 ```
-$ MACPAC_REPO="https://macpac.draumaz.xyz/opt-out-of-air/bin/index.html" macpac list
+$ MACPAC_REPO="https://macpac.draumaz.xyz/opt-out-of-air/bin" macpac list
 autoconf@2.71
 automake@1.16.5
 cmake@3.27.0-rc2
