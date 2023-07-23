@@ -32,7 +32,7 @@ exit 1
 }
 
 INSTALL() {
-  RECEIVE ${PKG_NAME}
+  if test ! -e "${PKG_NAME}"; then RECEIVE "${PKG_NAME}"; else TARGET_PKG="${PKG_NAME}"; fi
   printf "*INSTALL * | ${TARGET_PKG} ${LOADING}"
   bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
   printf "${SUCCESS}\n"
@@ -97,18 +97,16 @@ REMOVE() {
 case "${MACPAC_VERBOSITY}" in 1|yes) VERB=-v ;; esac;
 
 case "${1}" in
-  i|install|-i|--install|\
-  a|add|-a|--add)             ACTIVE=INSTALL   ;;
-  u|uninstall|-u|--uninstall|\
-  r|remove|-r|--remove)       ACTIVE=REMOVE    ;;
-  b|bins|-b|--bins)           ACTIVE=BINS      ;;
-  e|examine|-e|--examine)     ACTIVE=EXAMINE   ;;
-  l|list|-l|--list)           ACTIVE=LIST      ;;
-  s|stats|-s|--stats)         ACTIVE=STATS     ;;
-  su|selfup|-su|--selfup)     ACTIVE=SELFUP    ;;
-  v|version|-v|--version)     ACTIVE=VERSION   ;;
-  h|help|-h|--help|*)         ACTIVE=DEFHELP   ;;
-esac;
+  install|--install|i|-i|add|--add|a|-a)           ACTIVE=INSTALL   ;;
+  uninstall|--uninstall|u|-u|remove|--remove|r|-r) ACTIVE=UNINSTALL ;;
+  bins|--bins|-b)         ACTIVE=BINS ;;
+  examine|--examine|-e)   ACTIVE=EXAMINE ;;
+  list|--list|-l|l)       ACTIVE=LIST ;;
+  stats|--stats|-s|s)     ACTIVE=STATS ;;
+  selfup|su|--selfup|su)  ACTIVE=SELFUP ;;
+  version|--version|v|-v) ACTIVE=VERSION ;;
+  help|--help|h|-h) ACTIVE=help ;;
+esac
 
 case "${3}" in
   '') PKG_NAME="$2"; $ACTIVE ${PKG} ;;
