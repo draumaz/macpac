@@ -103,7 +103,7 @@ case "${1}" in
   examine|--examine|-e)   ACTIVE=EXAMINE ;;
   list|--list|-l|l)       ACTIVE=LIST ;;
   stats|--stats|-s|s)     ACTIVE=STATS ;;
-  selfup|su|--selfup|su)  ACTIVE=SELFUP ;;
+  selfup|su|--selfup|-su) ACTIVE=SELFUP ;;
   version|--version|v|-v) ACTIVE=VERSION ;;
   help|--help|h|-h|*)     ACTIVE=DEFHELP ;;
 esac
