@@ -105,7 +105,7 @@ case "${1}" in
   stats|--stats|-s|s)     ACTIVE=STATS ;;
   selfup|su|--selfup|su)  ACTIVE=SELFUP ;;
   version|--version|v|-v) ACTIVE=VERSION ;;
-  help|--help|h|-h) ACTIVE=help ;;
+  help|--help|h|-h|*)     ACTIVE=help ;;
 esac
 
 case "${3}" in
