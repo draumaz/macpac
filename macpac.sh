@@ -98,7 +98,7 @@ case "${MACPAC_VERBOSITY}" in 1|yes) VERB=-v ;; esac;
 
 case "${1}" in
   install|--install|i|-i|add|--add|a|-a)           ACTIVE=INSTALL   ;;
-  uninstall|--uninstall|u|-u|remove|--remove|r|-r) ACTIVE=UNINSTALL ;;
+  uninstall|--uninstall|u|-u|remove|--remove|r|-r) ACTIVE=REMOVE    ;;
   bins|--bins|-b)         ACTIVE=BINS ;;
   examine|--examine|-e)   ACTIVE=EXAMINE ;;
   list|--list|-l|l)       ACTIVE=LIST ;;
