@@ -86,7 +86,7 @@ REMOVE() {
   for i in `bsdtar -tf ${TARGET_PKG}`; do
     case ${i} in
       # blacklisted paths (not skipping them causes bad things)
-      *etc/|*local/|*locale/|*bin/|*include/|*lib/|*info/|*doc/|*opt/|*share/|*man/) ;;
+      *etc/|*local/|*locale/|*bin/|*include/|*lib/|*info/|*doc/|*opt/|*share/|*man*/) ;;
       *) rm -rf ${VERB} /${i} ;;
     esac
   done
