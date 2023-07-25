@@ -3,7 +3,9 @@
 # fallback variables if none are found in env
 test -z ${MACPAC_INSTALL_PATH} && MACPAC_INSTALL_PATH="/opt/local"
 
-MACPAC_VERSION="v0.1"; MACPAC_HEADER="macpac, by draumaz (2023) [${MACPAC_VERSION}]"
+MACPAC_VERSION="`case ${PWD} in *macpac*) git rev-parse HEAD | cut -c34- ;; *) echo 0.1 ;; esac`"
+MACPAC_HEADER="macpac, by draumaz (2023) [${MACPAC_VERSION}]"
+
 SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
 
 BINS()     { find ${MACPAC_INSTALL_PATH}/bin -type f | sed "s|${MACPAC_INSTALL_PATH}/bin/||g"; }
@@ -75,6 +77,7 @@ stats
 
 * installing to:      | ${MACPAC_INSTALL_PATH} `TOUCHY ${MACPAC_INSTALL_PATH} " [no r/w]"`
 * installation size   | `du -sh ${MACPAC_INSTALL_PATH} | awk '{print $1}'`
+* installed binaries  | `ls -1 ${MACPAC_INSTALL_PATH}/bin | wc -l`
 * execute path        | ${0}
 * active repo         | ${MACPAC_REPO}
 EOF
