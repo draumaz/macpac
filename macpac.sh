@@ -41,7 +41,7 @@ INSTALL() {
 LIST() {
   curl -sL ${MACPAC_REPO} | \
     grep 'https' | tr '"' '\n' | grep 'https' | \
-    tr '/' '\n' | grep 'tar.gz' | sed 's/.tar.gz//'
+    tr '/' '\n' | grep 'tar.gz' | sed 's/.tar.gz//' | grep "${PKG_NAME}"
 }
 
 RECEIVE() {
