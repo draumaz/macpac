@@ -34,9 +34,9 @@ opt/local/lib/libassuan.la
 # create an install path
 - decide on a good install path. i like /opt/local, but you can literally set it to anything.
 ```
-export MACPAC_INSTALL_PATH="/usr/opt/src/lib/man/man46/opt/bin/local"
+export MACPAC_INSTALL_PATH="/usr/opt/src/lib/man/man46/opt/bin/local" WHO=`whoami`
 sudo mkdir -pv ${MACPAC_INSTALL_PATH}
-sudo chown -Rv {your_username} ${MACPAC_INSTALL_PATH}
+sudo chown -Rv ${WHO} ${MACPAC_INSTALL_PATH}
 ```
 
 # usage
