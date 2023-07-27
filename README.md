@@ -1,6 +1,6 @@
 # macpac
 ```
-macpac, by draumaz (2023) [v0.1]
+macpac, by draumaz (2023) [v0.2]
 
 stats
 --------
@@ -12,16 +12,26 @@ stats
 ```
 - a tiny HTTPS-based package installer for macOS, written in (near)-POSIX shell.
 
-# repository management
-- a macpac repository consists of an ```index.html``` with a bunch of a-href'd hyperlinks to tarballs.
+# getting started
+
+## create an install path
+- decide on a good ```${MACPAC_INSTALL_PATH}```. i like ```/opt/local```, but you can literally set it to anything.
 ```
-$ echo ${MACPAC_REPO}
-$ https://macpac.draumaz.xyz/repos/opt-out-of-air/bin
+export MACPAC_INSTALL_PATH="/usr/opt/src/lib/man/man46/opt/bin/local" WHO=`whoami`
+sudo mkdir -pv ${MACPAC_INSTALL_PATH}
+sudo chown -Rv ${WHO} ${MACPAC_INSTALL_PATH}
+```
+
+## set your repository
+- a ```${MACPAC_REPO}``` consists of a text file with a bunch of hyperlinks to tarballs.
+- my examples wrap them in HTML syntax, but you could totally just host a .txt file with a bunch of URLs.
+```
+$ export MACPAC_REPO="oooa.draumaz.xyz/bin"
 $ curl -sL ${MACPAC_REPO} | head -2
 <a href="https://macpac.draumaz.xyz/m2/bin/gnupg/gnupg@2.4.2.tar.gz">gnupg/gnupg@2.4.2.tar.gz</a> <br>
 <a href="https://macpac.draumaz.xyz/m2/bin/gnupg/libassuan@2.5.5.tar.gz">gnupg/libassuan@2.5.5.tar.gz</a> <br>
 ```
-- these tarballs are Slackware-style file trees that you can directly untar into an install prefix.
+- these tarballs are Slackware-style file trees that you can directly untar into ```${MACPAC_INSTALL_PATH}```.
 ```
 $ tar -tf libassuan@2.5.5.tar
 ...
@@ -29,14 +39,6 @@ opt/local/share/info/assuan.info
 opt/local/lib/pkgconfig/
 opt/local/lib/libassuan.la
 ...
-```
-
-# create an install path
-- decide on a good install path. i like /opt/local, but you can literally set it to anything.
-```
-export MACPAC_INSTALL_PATH="/usr/opt/src/lib/man/man46/opt/bin/local" WHO=`whoami`
-sudo mkdir -pv ${MACPAC_INSTALL_PATH}
-sudo chown -Rv ${WHO} ${MACPAC_INSTALL_PATH}
 ```
 
 # usage
