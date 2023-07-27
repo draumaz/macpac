@@ -3,7 +3,7 @@
 # fallback variables if none are found in env
 test -z ${MACPAC_INSTALL_PATH} && MACPAC_INSTALL_PATH="/opt/local"
 
-MACPAC_VERSION="`case ${PWD} in *macpac*) git rev-parse HEAD | cut -c34- ;; *) echo 0.1 ;; esac`"
+MACPAC_VERSION="`case ${PWD} in *macpac*) git rev-parse HEAD | cut -c34- ;; *) echo 0.2 ;; esac`"
 MACPAC_HEADER="macpac, by draumaz (2023) [${MACPAC_VERSION}]"
 
 SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
