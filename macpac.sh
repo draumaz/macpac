@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-# fallback variables if none are found in env
+# fallback variables if not found in env
 test -z ${MACPAC_INSTALL_PATH} && MACPAC_INSTALL_PATH="/opt/local"
 
 MACPAC_VERSION="`case ${PWD} in *macpac*) git rev-parse HEAD | cut -c34- ;; *) echo 0.2 ;; esac`"
@@ -9,7 +9,7 @@ MACPAC_HEADER="macpac, by draumaz (2023) [${MACPAC_VERSION}]"
 SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
 
 BINS()     { find ${MACPAC_INSTALL_PATH}/bin -type f | sed "s|${MACPAC_INSTALL_PATH}/bin/||g"; }
-EXAMINE()  { RECEIVE ${PKG_NAME}; bsdtar -tvf ${TARGET_PKG} | less; TMP_WIPE; }
+EXAMINE()  { GOODPKG; bsdtar -tvf ${TARGET_PKG} | less; TMP_WIPE; }
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
 TMP_WIPE() { find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; }
 TOUCHY()   { touch ${1} > /dev/null 2>&1 || { printf "${FAILURE}${2}\n"; }; }
@@ -33,8 +33,16 @@ EOF
 exit 1
 }
 
+GOODPKG() {
+  if test ! -e "${PKG_NAME}"; then
+    if ! RECEIVE "${PKG_NAME}"; then
+      printf "\n${PKG_NAME} does not appear to be a valid package.\n"; exit 1
+    fi
+  else TARGET_PKG="${PKG_NAME}"; fi
+}
+
 INSTALL() {
-  if test ! -e "${PKG_NAME}"; then RECEIVE "${PKG_NAME}"; else TARGET_PKG="${PKG_NAME}"; fi
+  GOODPKG
   printf "*INSTALL * | ${TARGET_PKG} ${LOADING}"
   bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
   printf "${SUCCESS}\n"
@@ -51,7 +59,7 @@ RECEIVE() {
     grep https | grep ${PKG_NAME}` || true
   TMP_WIPE; cd /tmp
   printf "*DOWNLOAD* | `TAILGRAB ${NETPKG} / 1` ${LOADING}"
-  curl -sfLO ${NETPKG}; printf "${SUCCESS}\n"
+  curl -sfLO ${NETPKG} > /dev/null 2>&1 || return 1; printf "${SUCCESS}\n"
   TARGET_PKG=`TAILGRAB ${NETPKG} / 1`; TARGET_PKG_NAME=${TARGET_PKG}
 }
 
@@ -84,6 +92,7 @@ EOF
 }
 
 REMOVE() {
+  GOODPKG
   RECEIVE ${PKG_NAME}
   printf "*REMOVE*   | ${TARGET_PKG} ${LOADING}"
   for i in `bsdtar -tf ${TARGET_PKG}`; do
