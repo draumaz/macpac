@@ -11,11 +11,11 @@ macpac [COMMAND] [PACKAGE]
 # Environment Variables
 
 
-* **MACPAC\_INSTALL\_PATH**  
+* **MACPAC_INSTALL_PATH**  
   a directory exported to $PATH that macpac can install to.
   
   **EXAMPLE:** export MACPAC_INSTALL_PATH="/usr/local"
-* **MACPAC\_REPO**  
+* **MACPAC_REPO**  
   an http(s) link to a list of package .tar.gz files.
   
   **EXAMPLE:** export MACPAC_REPO="https://repo.mysite.com/repo.html"
