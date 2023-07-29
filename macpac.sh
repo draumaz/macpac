@@ -10,6 +10,7 @@ SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
 
 BINS()     { find ${MACPAC_INSTALL_PATH}/bin -type f | sed "s|${MACPAC_INSTALL_PATH}/bin/||g"; }
 EXAMINE()  { GOODPKG; bsdtar -tvf ${TARGET_PKG} | less; TMP_WIPE; }
+MANPAGE()  { man macpac; }
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
 TMP_WIPE() { find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; }
 TOUCHY()   { touch ${1} > /dev/null 2>&1 || { printf "${FAILURE}${2}\n"; }; }

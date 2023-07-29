@@ -12,7 +12,7 @@ a directory exported to $PATH that macpac can install to.
 \fB\/EXAMPLE:\fR export MACPAC_INSTALL_PATH="/usr/local"
 .TP
 \fB\/MACPAC_REPO\fR
-an http(s) link to a list of package .tar.gz files
+an http(s) link to a list of package .tar.gz files.
 
 \fB\/EXAMPLE:\fR export MACPAC_REPO="https://repo.mysite.com/repo.html"
 .SH COMMANDS
@@ -27,19 +27,19 @@ search ${MACPAC_REPO} for a package and uninstall it.
 search ${MACPAC_REPO} for a package and search its contents.
 .TP
 \fB\/--bins \fR
-display all installed binaries in ${MACPAC_INSTALL_PATH}
+display all installed binaries in ${MACPAC_INSTALL_PATH}.
 .TP
 \fB\/--help \fR
 show a quick help screen.
 .TP
 \fB\/--list \fR
-originally oooa-app-env, enter an environment that automatically lets macpac use the right arguments for installing dmg packages.
+pull ${MACPAC_REPO} and parse all package titles.
 .TP
 \fB\/--selfup\fR
-originally oooa-app-env, enter an environment that automatically lets macpac use the right arguments for installing dmg packages.
+update your macpac 'binary' directly from master.
 .TP
 \fB\/--stats\fR
-originally oooa-app-env, enter an environment that automatically lets macpac use the right arguments for installing dmg packages.
+show helpful information regarding your macpac install.
 
 .SH AUTHOR
 Written by draumaz.
