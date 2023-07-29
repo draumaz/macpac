@@ -64,16 +64,21 @@ RECEIVE() {
 }
 
 SELFUP() {
-  SLP="${MACPAC_INSTALL_PATH}/bin"
-  mkdir -p "${SLP}"
-  ls -al ${SLP}/macpac || true
+  SLP="${MACPAC_INSTALL_PATH}"
+  mkdir -p "${SLP}/bin ${SLP}/share/man/man1"
+  ls -al ${SLP}/bin/macpac || true
+  ls -al ${SLP}/share/man/man1/macpac.1 || true
   curl -sL https://github.com/draumaz/macpac/archive/refs/heads/main.tar.gz | \
     tar -xpzf - \
       --strip-components=1 \
       -C ${SLP} \
-      macpac-main/macpac.sh
-  mv ${SLP}/macpac.sh ${SLP}/macpac
-  ls -al ${SLP}/macpac
+      macpac-main/macpac.sh \
+      macpac-main/macpac.1
+  mv ${SLP}/macpac.sh ${SLP}/bin/macpac
+  mv ${SLP}/macpac.1 ${SLP}/share/man/man1/macpac.1
+  printf "\n"
+  ls -al ${SLP}/bin/macpac || true
+  ls -al ${SLP}/share/man/man1/macpac.1 || true
 }
 
 STATS() {
