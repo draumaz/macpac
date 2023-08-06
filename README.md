@@ -1,3 +1,6 @@
+# [this project has been retired as I no longer use Apple products.](#)
+
+
 # macpac(1) - a tiny HTTPS-based package installer for macOS, written in (near)-POSIX shell.
 
 Version 0.2, July 2023
