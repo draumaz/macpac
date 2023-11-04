@@ -18,28 +18,37 @@ a directory exported to $PATH that macpac can install to.
 an http(s) link to a list of package .tar.gz files.
 
 \fB\/EXAMPLE:\fR export MACPAC_REPO="https://repo.mysite.com/repo.html"
+
 .SH COMMANDS
+
 .TP
 \fB\/--install\fR
 search ${MACPAC_REPO} or ${PWD} for a package and install it.
+
 .TP
 \fB\/--uninstall\fR
 search ${MACPAC_REPO} or ${PWD} for a package and uninstall it.
+
 .TP
 \fB\/--examine\fR
 search ${MACPAC_REPO} or ${PWD} for a package and show its insides.
+
 .TP
 \fB\/--bins \fR
 display all installed binaries in ${MACPAC_INSTALL_PATH}.
+
 .TP
 \fB\/--help \fR
 show a quick help screen.
+
 .TP
 \fB\/--list \fR
 pull ${MACPAC_REPO} and parse all package titles.
+
 .TP
 \fB\/--selfup\fR
 update your macpac 'binary' directly from master.
+
 .TP
 \fB\/--stats\fR
 show helpful information regarding your macpac install.
