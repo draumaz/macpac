@@ -98,8 +98,7 @@ EOF
 }
 
 REMOVE() {
-  GOODPKG
-  RECEIVE ${PKG_NAME}
+  GOODPKG "${PKG_NAME}"
   printf "*REMOVE*   | ${TARGET_PKG} ${LOADING}"
   for i in `bsdtar -tf ${TARGET_PKG}`; do
     case ${i} in
