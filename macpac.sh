@@ -3,13 +3,14 @@
 # fallback variables if not found in env
 test -z ${MACPAC_INSTALL_PATH} && MACPAC_INSTALL_PATH="/opt/local"
 
-MACPAC_VERSION="`case ${PWD} in *macpac*) git rev-parse HEAD | cut -c34- ;; *) echo 0.2 ;; esac`"
+MACPAC_VERSION="`case ${PWD} in *macpac*) git rev-parse HEAD | cut -c34- ;; *) echo 0.2.2 ;; esac`"
 MACPAC_HEADER="macpac, by draumaz (2023) [${MACPAC_VERSION}]"
 
 SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
 
 BINS()     { find ${MACPAC_INSTALL_PATH}/bin -type f | sed "s|${MACPAC_INSTALL_PATH}/bin/||g"; }
 EXAMINE()  { GOODPKG; bsdtar -tvf ${TARGET_PKG} | less; TMP_WIPE; }
+IS_VERB()  { case "${MACPAC_VERBOSITY}" in yes|1) true ;; *) false ;; esac; }
 MANPAGE()  { man macpac; }
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
 TMP_WIPE() { find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; }
@@ -44,7 +45,7 @@ GOODPKG() {
 
 INSTALL() {
   GOODPKG
-  printf "*INSTALL * | ${TARGET_PKG} ${LOADING}"
+  printf "*INSTALL * | ${TARGET_PKG} ${LOADING}"; IS_VERB && printf "\n"
   bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
   printf "${SUCCESS}\n"
 }
