@@ -3,7 +3,7 @@
 # fallback variables if not found in env
 test -z ${MACPAC_INSTALL_PATH} && MACPAC_INSTALL_PATH="/opt/local"
 
-MACPAC_VERSION=`case ${PWD} in *macpac*) git rev-parse HEAD | cut -c34- ;; *) echo 0.2.3 ;; esac`
+MACPAC_VERSION=`case ${PWD} in *macpac*) git rev-parse HEAD | cut -c34- ;; *) echo 0.2.4 ;; esac`
 MACPAC_HEADER="macpac, by draumaz (2023) [${MACPAC_VERSION}]"
 
 SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
@@ -35,6 +35,15 @@ EOF
 exit 1
 }
 
+RECEIVE() {
+  NETPKG=`curl -sL ${MACPAC_REPO} | tr '>' '\n' | tr '"' '\n' | \
+    grep https | grep ${PKG_NAME}` || true
+  TMP_WIPE; cd /tmp
+  printf "[download] "
+  curl -sfLO ${NETPKG} > /dev/null 2>&1 || return 1
+  TARGET_PKG=`TAILGRAB ${NETPKG} / 1`; TARGET_PKG_NAME=${TARGET_PKG}
+}
+
 GOODPKG() {
   if test ! -e "${PKG_NAME}"; then
     if ! RECEIVE "${PKG_NAME}"; then
@@ -44,25 +53,15 @@ GOODPKG() {
 }
 
 INSTALL() {
-  GOODPKG
-  printf "*INSTALL * | ${TARGET_PKG} ${LOADING}"; IS_VERB && printf "\n"
+  printf "(${PKG_NAME}) "; GOODPKG; printf "[install]"
   bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
-  printf "${SUCCESS}\n"
+  printf " ${SUCCESS}\n"
 }
 
 LIST() {
   curl -sL ${MACPAC_REPO} | \
     grep 'https' | tr '"' '\n' | grep 'https' | \
     tr '/' '\n' | grep 'tar.gz' | sed 's/.tar.gz//' | grep "${PKG_NAME}"
-}
-
-RECEIVE() {
-  NETPKG=`curl -sL ${MACPAC_REPO} | tr '>' '\n' | tr '"' '\n' | \
-    grep https | grep ${PKG_NAME}` || true
-  TMP_WIPE; cd /tmp
-  printf "*DOWNLOAD* | `TAILGRAB ${NETPKG} / 1` ${LOADING}"
-  curl -sfLO ${NETPKG} > /dev/null 2>&1 || return 1; printf "${SUCCESS}\n"
-  TARGET_PKG=`TAILGRAB ${NETPKG} / 1`; TARGET_PKG_NAME=${TARGET_PKG}
 }
 
 SELFUP() {
