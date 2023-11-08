@@ -53,9 +53,9 @@ GOODPKG() {
 }
 
 INSTALL() {
-  printf "(${PKG_NAME}) "; GOODPKG; printf "[install]"
+  printf "(${PKG_NAME}) "; GOODPKG; printf "[install] "
   bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
-  printf " ${SUCCESS}\n"
+  printf "${SUCCESS}\n"
 }
 
 LIST() {
