@@ -1,14 +1,14 @@
 #!/bin/sh -e
 
 # fallback variables if not found in env
-test -z ${MACPAC_INSTALL_PATH} && MACPAC_INSTALL_PATH="/opt/local"
+test -z ${MACPAC_PATH} && MACPAC_PATH="/opt/local"
 
 MACPAC_VERSION=`case ${PWD} in *macpac*) git rev-parse HEAD | cut -c34- ;; *) echo 0.2.4 ;; esac`
 MACPAC_HEADER="macpac, by draumaz (2023) [${MACPAC_VERSION}]"
 
 SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
 
-BINS()     { find ${MACPAC_INSTALL_PATH}/bin -type f | sed "s|${MACPAC_INSTALL_PATH}/bin/||g"; }
+BINS()     { find ${MACPAC_PATH}/bin -type f | sed "s|${MACPAC_PATH}/bin/||g"; }
 EXAMINE()  { GOODPKG; bsdtar -tvf ${TARGET_PKG} | less; TMP_WIPE; }
 IS_VERB()  { case "${MACPAC_VERBOSITY}" in yes|1) true ;; *) false ;; esac; }
 MANPAGE()  { man macpac; }
@@ -54,7 +54,7 @@ GOODPKG() {
 
 INSTALL() {
   printf "(${PKG_NAME}) "; GOODPKG; printf "[install] "
-  bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_INSTALL_PATH}
+  bsdtar -xp ${VERB} -f ${TARGET_PKG} --strip-components=2 -C ${MACPAC_PATH}
   printf "${SUCCESS}\n"
 }
 
@@ -65,7 +65,7 @@ LIST() {
 }
 
 SELFUP() {
-  SLP="${MACPAC_INSTALL_PATH}"
+  SLP="${MACPAC_PATH}"
   mkdir -p "${SLP}/bin ${SLP}/share/man/man1"
   ls -al ${SLP}/bin/macpac || true
   ls -al ${SLP}/share/man/man1/macpac.1 || true
@@ -89,9 +89,9 @@ ${MACPAC_HEADER}
 stats
 --------
 
-* installing to:      | ${MACPAC_INSTALL_PATH} `TOUCHY ${MACPAC_INSTALL_PATH} " [no r/w]"`
-* installation size   | `du -sh ${MACPAC_INSTALL_PATH} | awk '{print $1}'`
-* installed binaries  | `ls -1 ${MACPAC_INSTALL_PATH}/bin | wc -l | awk '{print $1}'`
+* installing to:      | ${MACPAC_PATH} `TOUCHY ${MACPAC_PATH} " [no r/w]"`
+* installation size   | `du -sh ${MACPAC_PATH} | awk '{print $1}'`
+* installed binaries  | `ls -1 ${MACPAC_PATH}/bin | wc -l | awk '{print $1}'`
 * execute path        | ${0}
 * active repo         | ${MACPAC_REPO}
 EOF

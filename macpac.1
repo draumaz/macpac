@@ -9,10 +9,10 @@ macpac \- a tiny HTTPS-based package installer for macOS, written in (near)-POSI
 
 .SH ENVIRONMENT VARIABLES
 .TP
-\fB\/MACPAC_INSTALL_PATH\fR
+\fB\/MACPAC_PATH\fR
 a directory exported to $PATH that macpac can install to.
 
-\fB\/EXAMPLE:\fR export MACPAC_INSTALL_PATH="/usr/local"
+\fB\/EXAMPLE:\fR export MACPAC_PATH="/usr/local"
 .TP
 \fB\/MACPAC_REPO\fR
 an http(s) link to a list of package .tar.gz files.
@@ -35,7 +35,7 @@ search ${MACPAC_REPO} or ${PWD} for a package and show its insides.
 
 .TP
 \fB\/--bins \fR
-display all installed binaries in ${MACPAC_INSTALL_PATH}.
+display all installed binaries in ${MACPAC_PATH}.
 
 .TP
 \fB\/--help \fR
