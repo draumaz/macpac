@@ -9,7 +9,7 @@ MACPAC_HEADER="macpac, by draumaz (2023) [${MACPAC_VERSION}]"
 SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
 
 BINS()     { find ${MACPAC_PATH}/bin -type f | sed "s|${MACPAC_PATH}/bin/||g"; }
-EXAMINE()  { GOODPKG; bsdtar -tvf ${TARGET_PKG} | less; TMP_WIPE; }
+EXAMINE()  { GOODPKG; bsdtar -tvf ${TARGET_PKG} | less -M; TMP_WIPE; }
 MANPAGE()  { man macpac; }
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
 TMP_WIPE() { find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; }
