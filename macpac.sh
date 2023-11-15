@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
-# fallback variables if not found in env
 test -z ${MACPAC_PATH} && MACPAC_PATH="/opt/local"
+case "$VERBOSE" in yes|1) VERB="-v" ;; esac
 
 MACPAC_VERSION=`case ${PWD} in *macpac*) git rev-parse HEAD | cut -c34- ;; *) echo 0.2.3 ;; esac`
 MACPAC_HEADER="macpac, by draumaz (2023) [${MACPAC_VERSION}]"
@@ -10,7 +10,6 @@ SUCCESS="✅ "; FAILURE="🆘 "; LOADING="🔁"
 
 BINS()     { find ${MACPAC_PATH}/bin -type f | sed "s|${MACPAC_PATH}/bin/||g"; }
 EXAMINE()  { GOODPKG; bsdtar -tvf ${TARGET_PKG} | less; TMP_WIPE; }
-IS_VERB()  { case "${MACPAC_VERBOSITY}" in yes|1) true ;; *) false ;; esac; }
 MANPAGE()  { man macpac; }
 TAILGRAB() { echo ${1} | tr ${2} '\n' | tail -${3}; }
 TMP_WIPE() { find /tmp/ -maxdepth 1 -name '*.tar.gz' -delete; }
@@ -98,13 +97,12 @@ EOF
 }
 
 REMOVE() {
-  GOODPKG "${PKG_NAME}"
-  printf "*REMOVE*   | ${TARGET_PKG} ${LOADING}"
+  printf "[${PKG_NAME}] "; GOODPKG "${PKG_NAME}"; printf "[remove] "
   for i in `bsdtar -tf ${TARGET_PKG}`; do
     case ${i} in
       # blacklisted paths (not skipping them causes bad things)
       *etc/|*local/|*locale/|*bin/|*include/|*lib/|*info/|*doc/|*opt/|*share/|*man*/) ;;
-      *) rm -rf ${VERB} /${i} ;;
+      *) rm -rf $VERB /${i} ;;
     esac
   done
   printf "${SUCCESS}\n"
