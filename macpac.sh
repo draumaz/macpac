@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh
 
 test -z ${MACPAC_PATH} && MACPAC_PATH="/opt/local"
 case "$VERBOSE" in yes|1) VERB="-v" ;; esac
